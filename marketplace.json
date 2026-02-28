@@ -1,0 +1,22 @@
+{
+  "name": "casely-qa-skill",
+  "owner": {
+    "name": "John Wayne",
+    "github": "JohnWayneeee"
+  },
+  "metadata": {
+    "description": "PDF/DOCX → TestRail-ready test cases. Parse → Style → Plan → Generate → Export.",
+    "version": "1.5.0"
+  },
+  "plugins": [
+    {
+      "name": "casely-qa",
+      "description": "Intelligent QA assistant: messy docs → atomic test cases → TestRail Excel",
+      "source": "./",
+      "strict": false,
+      "skills": [
+        "./skill/casely"
+      ]
+    }
+  ]
+}

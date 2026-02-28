@@ -1,0 +1,43 @@
+# Python bytecode
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environments
+.venv/
+venv/
+.env/
+.env
+
+# Build / dist artifacts
+build/
+dist/
+*.egg-info/
+
+# Logs
+*.log
+
+# Test / cache artifacts
+.cache/
+.coverage
+htmlcov/
+
+# IDE / editor
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Project runtime data (создаётся пользователем, не нужно в репо)
+projects/
+
+# Local agent / skills tooling (not for repo)
+.agent/
+.agents/
+skills-lock.json
+.gitignore
+
