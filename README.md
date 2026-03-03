@@ -10,6 +10,9 @@
   <img src="https://img.shields.io/badge/License-MIT-yellow.svg" alt="License">
   <img src="https://img.shields.io/badge/Python-3.10%2B-blue.svg" alt="Python Version">
   <img src="https://img.shields.io/badge/QA-Automation-green.svg" alt="QA">
+  <img src="https://img.shields.io/github/stars/JohnWayneeee/casely-qa-skill?style=flat&logo=github" alt="Stars">
+  <img src="https://img.shields.io/github/downloads/JohnWayneeee/casely-qa-skill/total?style=flat&logo=github" alt="Downloads">
+  <img src="https://img.shields.io/github/forks/JohnWayneeee/casely-qa-skill?style=flat&logo=github" alt="Forks">
 </p>
 
 ---
