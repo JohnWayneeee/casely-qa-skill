@@ -1,0 +1,25 @@
+{
+  "name": "casely",
+  "owner": {
+    "name": "John Wayne",
+    "github": "JohnWayneeee"
+  },
+  "metadata": {
+    "description": "PDF/DOCX to TestRail-ready test cases. Parse, Style, Plan, Generate, and Export.",
+    "version": "1.5.0",
+    "category": "QA Automation, QA manual",
+    "tags": ["qa", "testing", "testrail", "automation"],
+    "icon": "https://raw.githubusercontent.com"
+  },
+  "plugins": [
+    {
+      "name": "casely",
+      "description": "Intelligent QA assistant: messy docs → atomic test cases → TestRail Excel",
+      "source": "./",
+      "strict": false,
+      "skills": [
+        "skill/casely"
+      ]
+    }
+  ]
+}
