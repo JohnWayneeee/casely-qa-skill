@@ -12,7 +12,6 @@
   <img src="https://img.shields.io/badge/QA-Automation-green.svg" alt="QA">
   <img src="https://img.shields.io/github/stars/JohnWayneeee/casely-qa-skill?style=flat&logo=github" alt="Stars">
   <img src="https://img.shields.io/github/forks/JohnWayneeee/casely-qa-skill?style=flat&logo=github" alt="Forks">
-  <img src="https://img.shields.io/github/commits/main/JohnWayneeee/casely-qa-skill?style=flat&logo=github" alt="Commits">
 </p>
 
 ---
