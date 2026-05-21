@@ -49,6 +49,20 @@ Casely acts as your **Virtual QA Lead**, transforming raw requirements into stru
 
 ---
 
+## Hosted Web Version
+
+This open-source skill is great when you want to run the workflow locally in your AI IDE.
+
+If you want a hosted version with a browser UI, file uploads, team review flow, and no local setup, join the Casely web early access list:
+
+https://casely.digital/
+
+Casely web is built for QA teams that want to turn requirements into review-ready test cases without setting up local scripts.
+
+Read more: [Casely Hosted Web Version](docs/hosted-web-version.md)
+
+---
+
 ## 🎬 8-Minute Demo Workflow
 
 Transform chaotic documentation into a structured test suite in four simple stages.
