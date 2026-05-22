@@ -2,7 +2,7 @@
 
 <div align="center">
 
-<img src="assets/logo.png" alt="Casely — QA Test Case Generator" width="720">
+<img src="assets/opengraph-image.png" alt="Casely — QA Test Case Generator" width="720">
 
 **From messy PDF requirements → TestRail-ready Excel files in 8 minutes.**
 
