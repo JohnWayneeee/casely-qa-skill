@@ -8,8 +8,11 @@
     "description": "PDF/DOCX to TestRail-ready test cases. Parse, Style, Plan, Generate, and Export.",
     "version": "1.5.0",
     "category": "QA Automation, QA manual",
-    "tags": ["qa", "testing", "testrail", "automation"],
-    "icon": "https://raw.githubusercontent.com"
+    "tags": ["qa", "testing", "testrail", "test-cases", "automation", "docling", "pdf", "excel", "qase", "istqb"],
+    "icon": "https://raw.githubusercontent.com/JohnWayneeee/casely-qa-skill/main/assets/logo.png",
+    "homepage": "https://casely.digital/",
+    "repository": "https://github.com/JohnWayneeee/casely-qa-skill",
+    "license": "MIT"
   },
   "plugins": [
     {
