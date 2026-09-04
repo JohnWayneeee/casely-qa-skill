@@ -7,6 +7,42 @@ Versions follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ---
 
+## [2.1.0] — 2026-09-04
+
+### Fixed
+- **Export no longer loses data silently.** Two cases produced a plausible-looking but wrong
+  Excel file: a real line break inside a cell dropped every step after it, and an unescaped
+  `|` shifted every value one column to the left. The exporter now detects both, names the
+  file and the cause, skips the case and exits non-zero instead of writing a corrupted row.
+- `SKILL.md` now states the formatting contract (`<br>` for line breaks, `\|` for literal
+  pipes) in the generation phase, where the file actually gets written, rather than only in
+  the export phase.
+
+### Added
+- **One combined workbook by default.** `export_to_xlsx.py` now writes a single
+  `all_test_cases.xlsx` with one row per case, matching how TestRail, Qase, Zephyr and Xray
+  import. Per-case files remain available with `--split`.
+- **`references/test_design.md`** — equivalence partitioning, boundary values, decision
+  tables, state transitions and error guessing, plus the quality bar for a written case and
+  coverage integrity checks. Read before planning and generation.
+- **Requirement gap reporting.** The plan phase now flags untestable wording, ambiguity,
+  contradictions and missing error paths, with section references.
+- Case IDs continue the numbering scheme found in the user's example file.
+- Traceability: cases record the requirement or section they came from.
+- Evals expanded to 8 cases with 34 formal assertions, covering the approval gate, the
+  formatting contract, gap reporting and boundary technique.
+
+### Removed
+- `pyproject.toml`. `openpyxl` ships with Claude's code execution environment, so the skill
+  needs no local Python setup at all.
+
+### Changed
+- README cut from 289 to 185 lines, with a placeholder for the walkthrough video.
+- Skill description rewritten for more reliable triggering, including checklist, acceptance
+  criteria, regression suite and Russian phrasings.
+
+---
+
 ## [2.0.0] — 2026-09-04
 
 ### Changed — full workflow overhaul
