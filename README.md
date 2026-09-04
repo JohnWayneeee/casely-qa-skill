@@ -18,12 +18,8 @@ Free, open-source QA skill for Claude Code, claude.ai and the Claude desktop app
 
 ## Watch it work
 
-<!-- VIDEO: replace this block with the walkthrough.
-     GitHub renders an uploaded .mp4 inline if you drag it into an issue and paste the
-     resulting URL here. For YouTube, link a thumbnail:
-     [![Casely walkthrough](assets/video-thumb.png)](https://youtu.be/VIDEO_ID) -->
-
-*Walkthrough video coming soon.*
+📹 [Download the walkthrough video](assets/casely-walkthrough-small.mp4) — GitHub doesn't inline-play
+`.mp4` files committed to a repo, so click through to watch or download it directly.
 
 ---
 
