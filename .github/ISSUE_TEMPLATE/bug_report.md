@@ -17,16 +17,15 @@ assignees: ''
 ## Steps to reproduce
 
 1. Run `...`
-2. Drop file `...` into `...`
-3. Run `/...`
+2. Attach file `...`
+3. Ask Casely to `...`
 4. See error
 
 ## Environment
 
+- **Where you used Casely:** (Claude Code / claude.ai web / Claude desktop)
 - **OS:** (e.g. macOS 14, Ubuntu 22.04, Windows 11)
-- **Python version:** (e.g. 3.12.2)
-- **uv version:** (run `uv --version`)
-- **Casely version:** (check `pyproject.toml`)
+- **Casely version:** (the `version` field in `skill/casely/SKILL.md`)
 
 ## Error output
 

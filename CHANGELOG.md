@@ -7,6 +7,79 @@ Versions follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ---
 
+## [2.1.0] — 2026-09-04
+
+### Fixed
+- **Export no longer loses data silently.** Two cases produced a plausible-looking but wrong
+  Excel file: a real line break inside a cell dropped every step after it, and an unescaped
+  `|` shifted every value one column to the left. The exporter now detects both, names the
+  file and the cause, skips the case and exits non-zero instead of writing a corrupted row.
+- `SKILL.md` now states the formatting contract (`<br>` for line breaks, `\|` for literal
+  pipes) in the generation phase, where the file actually gets written, rather than only in
+  the export phase.
+
+### Added
+- **One combined workbook by default.** `export_to_xlsx.py` now writes a single
+  `all_test_cases.xlsx` with one row per case, matching how TestRail, Qase, Zephyr and Xray
+  import. Per-case files remain available with `--split`.
+- **`references/test_design.md`** — equivalence partitioning, boundary values, decision
+  tables, state transitions and error guessing, plus the quality bar for a written case and
+  coverage integrity checks. Read before planning and generation.
+- **Requirement gap reporting.** The plan phase now flags untestable wording, ambiguity,
+  contradictions and missing error paths, with section references. Two patterns that read
+  as understood are called out by name: a term the spec gates behaviour on without defining
+  it, and an external dependency whose failure it never describes.
+- Phase 3 cross-checks limits, thresholds and timeouts against the spec's own worked
+  examples before the plan goes out, so a contradiction costs one approval instead of two.
+- Phase 2 reports when the team's format has no column for the source requirement, and
+  offers to add one, instead of dropping traceability without a word.
+- Boundary coverage requires both sides of every edge, and an expected result may no longer
+  offer a choice of outcomes.
+- Case IDs continue the numbering scheme found in the user's example file.
+- Traceability: cases record the requirement or section they came from.
+- Evals expanded to 8 cases with 34 formal assertions, covering the approval gate, the
+  formatting contract, gap reporting and boundary technique.
+
+- **`examples/`** — a wallet spec with five planted defects, a team-style example file and a
+  100-point rubric, so two runs of the skill can be compared on the same input.
+
+### Removed
+- `pyproject.toml`. `openpyxl` ships with Claude's code execution environment, so the skill
+  needs no local Python setup at all.
+
+### Changed
+- README cut from 289 to 185 lines, with a placeholder for the walkthrough video.
+- Skill description rewritten for more reliable triggering, including checklist, acceptance
+  criteria, regression suite and Russian phrasings.
+
+---
+
+## [2.0.0] — 2026-09-04
+
+### Changed — full workflow overhaul
+- **Replaced the command-driven workflow with a single conversation.** `/init`, `/parse`,
+  `/style`, `/plan`, `/generate`, and `/export` no longer exist as commands. Attach requirement
+  documents and (optionally) example test cases, describe what you need, and Casely runs the
+  whole pipeline in one conversation.
+- **Dropped the `docling` parser and OCR dependency entirely.** Claude reads PDF/DOCX/XLSX
+  attachments natively; `scripts/casely_parser.py` and `references/parser_usage.md` are
+  removed. `openpyxl` is now the only dependency.
+- **Added a mandatory approval gate on the test plan.** Casely always stops after proposing
+  coverage (modules, tiers, estimated case count) and waits for explicit approval before
+  generating any test case. Every other phase proceeds without extra confirmation.
+- **Removed persistent `projects/<name>/` scaffolding.** Each conversation is self-contained;
+  `export_to_xlsx.py` now defaults to `results/` → `exports/` in the working directory instead
+  of auto-detecting a project folder.
+- Rewrote `SKILL.md`, `README.md`, evals, and reference docs around the new flow. This is the
+  same skill everywhere: Claude Code, claude.ai (web), and the Claude desktop app.
+
+### Why
+The command-based flow assumed a local terminal and a persistent project folder — a poor fit
+for QA engineers who mostly use Claude in the browser or desktop app. The new flow needs
+nothing but an attachment and a sentence.
+
+---
+
 ## [1.5.0] — 2026-05-22
 
 ### Added

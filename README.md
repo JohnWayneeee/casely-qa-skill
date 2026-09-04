@@ -2,182 +2,154 @@
 
 <div align="center">
 
-<img src="assets/opengraph-image.png" alt="Casely — AI QA Test Case Generator: PDF requirements to TestRail-ready Excel in 8 minutes" width="720">
+<img src="assets/opengraph-image.png" alt="Casely — AI QA Test Case Generator" width="720">
 
-**Turn messy PDF requirements into TestRail-ready test cases in 8 minutes.**  
-*Free, open-source AI skill for Claude Code, Cursor, and any AI IDE.*
+**Attach your requirements and approve one plan. Casely returns a TestRail-ready Excel file.**  
+Free, open-source QA skill for Claude Code, claude.ai and the Claude desktop app.
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![Version](https://img.shields.io/badge/version-1.5.0-blue.svg)](https://github.com/JohnWayneeee/casely-qa-skill/releases)
-[![Python](https://img.shields.io/badge/Python-3.10+-blue.svg)](https://www.python.org/)
+[![Version](https://img.shields.io/badge/version-2.1.0-blue.svg)](https://github.com/JohnWayneeee/casely-qa-skill/releases)
 [![Stars](https://img.shields.io/github/stars/JohnWayneeee/casely-qa-skill?style=flat&logo=github)](https://github.com/JohnWayneeee/casely-qa-skill/stargazers)
-[![Issues](https://img.shields.io/github/issues/JohnWayneeee/casely-qa-skill)](https://github.com/JohnWayneeee/casely-qa-skill/issues)
 [![Casely Web](https://img.shields.io/badge/Hosted%20Version-casely.digital-ff6b6b?style=flat)](https://casely.digital/)
 
 </div>
 
 ---
 
-## The problem every QA engineer knows
+## Watch it work
 
-You were hired to **find bugs**. Instead, you spend 40% of your week writing test cases.
+<!-- VIDEO: replace this block with the walkthrough.
+     GitHub renders an uploaded .mp4 inline if you drag it into an issue and paste the
+     resulting URL here. For YouTube, link a thumbnail:
+     [![Casely walkthrough](assets/video-thumb.png)](https://youtu.be/VIDEO_ID) -->
 
-Requirements scattered across 10 PDF files. Every project has different column names — manual reformatting every time. A single module takes 2 days to document. Then the TestRail import fails because the headers don't match.
-
-> ❌ Requirements buried in PDF/DOCX/XLSX files with no structure  
-> ❌ Each project reinvents column names — manual mapping every sprint  
-> ❌ 50 test cases = 2–3 business days of repetitive writing  
-> ❌ TestRail import breaks due to column mismatches  
-> ❌ No coverage plan = missed edge cases and bugs reaching production  
-
-**Every hour writing test cases is an hour not spent testing.**
+*Walkthrough video coming soon.*
 
 ---
 
-## What Casely does
+## The problem
 
-Casely is your **Virtual QA Lead**. It reads your requirements, learns your team's exact format, and writes the test cases — atomic, structured, and import-ready.
+You were hired to find bugs, and 40% of your week goes into writing test cases.
 
-```
-Requirements PDF → /parse → /style → /plan → /generate → /export → TestRail ✅
-```
-
-| Step | Command | What happens |
-|------|---------|--------------|
-| **Extract** | `/parse` | Docling OCR pulls tables and text from any PDF/DOCX |
-| **Learn** | `/style` | Casely reads your existing Excel and clones your column structure |
-| **Plan** | `/plan` | Generates a coverage map: "47 tests across 6 modules" |
-| **Write** | `/generate` | Creates atomic `.md` test cases — one file per test |
-| **Deliver** | `/export` | Batch-converts everything to TestRail-ready Excel |
-
-Open `exports/functional_TC001_happy_path.xlsx` — it's a 1:1 match to your team's template, ready for immediate import.
+Requirements land as unstructured PDFs. Projects rename the columns, so you remap them each
+sprint. One module takes two days to document, and then the TestRail import fails because the
+headers don't match.
 
 ---
 
-## Why QA teams switch to Casely
+## How it works
 
-| | Casely | Manual writing | Traditional tools |
-|---|:---:|:---:|:---:|
-| Parses any format (PDF/DOCX/XLSX) | ✅ | ❌ | ❌ |
-| Matches **your** column structure | ✅ | ❌ | ❌ |
-| Generates a test plan automatically | ✅ | ❌ | ❌ |
-| 1 test case = 1 file (atomic, reviewable) | ✅ | ❌ | ⚠️ bulk only |
-| TestRail / Qase ready out of the box | ✅ | ❌ | ⚠️ manual fix |
-| Works with English **and** Russian docs | ✅ | ❌ | ❌ |
-| Free, runs locally, no cloud lock-in | ✅ | ✅ | ❌ |
+Attach your files and say what you need:
+
+> "Here are the requirements for the Payments module and two example test cases my team
+> writes. Give me test cases for the refund flow."
+
+Casely runs five phases in that same conversation:
+
+| Phase | What happens |
+|-------|--------------|
+| **Intake** | Reads your PDF, DOCX or XLSX attachments. No parser, no OCR setup |
+| **Style guide** | Copies the column structure and tone from your example file |
+| **Test plan** | Proposes coverage, flags holes in the spec, then waits for your OK |
+| **Generate** | Writes the cases using boundary values, decision tables and negative paths |
+| **Export** | Builds one Excel file your TMS imports in a single pass |
+
+You only get interrupted once, at the plan. Adjust the scope, drop a module, add negative
+cases, or say "go".
 
 ---
 
-## ⚡ Quick Start
+## Install
 
-> **Prerequisites:** Python 3.10+ and [uv](https://github.com/astral-sh/uv)
-
-### Option A — Skills CLI (recommended)
+**Claude Code**
 
 ```bash
-# with bunx
 bunx skills add JohnWayneeee/casely-qa-skill
-
-# or npx
-npx skills@latest add JohnWayneeee/casely-qa-skill
+# or: npx skills@latest add JohnWayneeee/casely-qa-skill
 ```
 
-### Option B — Clone & run
+**claude.ai and Claude desktop**
 
-```bash
-git clone https://github.com/JohnWayneeee/casely-qa-skill.git
-cd casely-qa-skill
-uv sync
-```
+1. Build the upload archive. Claude reads `SKILL.md` from the top-level folder of the zip,
+   so GitHub's own "Download ZIP" will not work — it wraps everything in
+   `casely-qa-skill-main/skill/casely/`. Clone the repo and zip from inside `skill/`:
+   ```bash
+   git clone https://github.com/JohnWayneeee/casely-qa-skill.git
+   cd casely-qa-skill/skill && zip -r casely.zip casely
+   ```
+   The archive should list `casely/SKILL.md`, not `skill/casely/SKILL.md`. Check with
+   `unzip -l casely.zip`.
+2. On claude.ai, open **Settings → Capabilities**, turn on **Code execution** if it isn't
+   already, then go to **Skills → Create skill** and upload `casely.zip`.
+3. The Claude desktop app uses the same account, so the skill is available there too —
+   nothing to install separately.
+4. Start a chat, attach your files, describe what you need.
 
-Drop your files into the project folder and run the workflow:
+Nothing to install locally. The export step uses `openpyxl`, which already ships inside
+Claude's code execution environment. Custom skills are private to your account (Pro, Max,
+Team, or Enterprise plan required) and won't sync to a Claude Code install — set that up
+separately with the command above.
 
-```
-/init my-project
-/parse
-/style
-/plan
-/generate functional AccountTransfer
-/export
-```
+**Pick Opus.** The plan phase decides what gets tested at all: which boundaries matter,
+which conditions combine, which requirement is too vague to test. Smaller models write
+acceptable cases from a plan they were handed, and miss the holes in the spec.
 
 ---
 
-## 8-minute walkthrough
+## What you get
 
-<details>
-<summary><strong>Step 1 — Initialize</strong></summary>
+- **`exports/all_test_cases.xlsx`** with one row per case and your own column headers. Import
+  it once instead of forty times.
+- **`results/*.md`**, one file per case, so you can review or version-control them separately.
+- **A list of holes in the spec**: contradictions, untestable wording ("should be fast"), and
+  error paths the requirements never mention.
 
-```bash
-/init my-project
-```
-
-Drop two files into `projects/my-project/input/`:
-- `requirements.pdf` — your specification document
-- `example.xlsx` — an existing test case file your team already uses
-
-Casely learns your column structure from the example. No config needed.
-
-</details>
-
-<details>
-<summary><strong>Step 2 — Parse & plan</strong></summary>
-
-```bash
-/parse    # extracts text and tables from your PDF via Docling OCR
-/style    # reads your example.xlsx and clones the column structure exactly
-/plan     # output: "Detected 6 modules. Recommended: 47 test cases."
-```
-
-You now have a full coverage strategy before writing a single test case.
-
-</details>
-
-<details>
-<summary><strong>Step 3 — Generate</strong></summary>
-
-```bash
-/generate functional AccountTransfer
-```
-
-Casely writes 10+ atomic `.md` files — one per test case. Review and edit in any text editor or Git UI before exporting.
-
-</details>
-
-<details>
-<summary><strong>Step 4 — Export</strong></summary>
-
-```bash
-/export
-```
-
-Every `.md` file becomes a separate Excel file matching your team's template exactly. Import into TestRail, Qase, or any TMS — no manual reformatting.
-
-</details>
+The export refuses to write a file it cannot read faithfully. A case that reaches TestRail
+without its steps costs more than a failed export, so malformed input gets named and fixed
+before delivery.
 
 ---
 
-## Command reference
+## FAQ
 
-| Command | Action | Notes |
-|---------|--------|-------|
-| `/init [name]` | Scaffold project workspace | Run once per project |
-| `/parse` | Extract from PDF/DOCX | High-fidelity OCR via Docling |
-| `/style` | Clone your Excel column format | Reads your example — zero config |
-| `/plan` | Build ISTQB-aligned coverage map | Shows module breakdown and estimates |
-| `/generate [type]` | Write atomic test cases | Produces one `.md` per test |
-| `/export` | Convert all `.md` to Excel | Batch output, import-ready |
+<details>
+<summary>Do I need to run commands?</summary>
 
-Supported generation types: `functional`, `negative`, `integration`, `boundary`, `smoke`, `security`
+No. Attach the files, describe what you need, and answer when Casely asks which module to
+cover. The one place it pauses is the test plan.
 
----
+</details>
 
-## Under the hood
+<details>
+<summary>Can I use my team's own Excel columns?</summary>
 
-- **Docling Engine** — advanced OCR and table extraction for complex, multi-column PDFs including scanned documents
-- **Atomic design** — 1 test case = 1 source file = 1 Excel; no monolithic spreadsheets to untangle
-- **Style Guide System** — no hardcoded columns; Casely learns from your existing files and replicates the exact structure
-- **Language agnostic** — generates test cases in English or Russian, matching the language of your documents
+That is the point. Attach an existing test case file and Casely copies the headers, their
+order and the writing style. No config file.
+
+</details>
+
+<details>
+<summary>Does it work with Russian requirements?</summary>
+
+Yes. Casely writes the cases in the language of your examples.
+
+</details>
+
+<details>
+<summary>Which test management systems can import the output?</summary>
+
+Any tool that reads Excel: TestRail, Qase, Zephyr, Xray. The columns match whatever your team
+already uses.
+
+</details>
+
+<details>
+<summary>What about scanned PDFs?</summary>
+
+Text-based PDFs, DOCX and XLSX work well. An image-only scan with no selectable text may not
+extract cleanly, so export a text version when you can.
+
+</details>
 
 ---
 
@@ -186,103 +158,44 @@ Supported generation types: `functional`, `negative`, `integration`, `boundary`,
 ```
 casely-qa-skill/
 ├── skill/casely/
-│   ├── SKILL.md              # AI skill definition and full workflow
+│   ├── SKILL.md               # the skill definition and workflow
 │   ├── scripts/
-│   │   ├── casely_parser.py  # Document → Markdown converter (Docling)
-│   │   └── export_to_xlsx.py # Markdown → Excel exporter
-│   ├── references/           # Technical reference docs
-│   └── evals/                # Evaluation test cases
-├── docs/
-│   └── hosted-web-version.md # Hosted version details
-├── assets/                   # Images and branding
-├── pyproject.toml            # Python dependencies
-└── marketplace.json          # Skill marketplace metadata
+│   │   └── export_to_xlsx.py  # Markdown → Excel exporter
+│   ├── references/            # test design, style analysis, export details
+│   └── evals/                 # evaluation cases
+├── examples/                  # sample spec + team style file, and a scoring rubric
+├── docs/hosted-web-version.md
+└── marketplace.json
 ```
 
 ---
 
 ## Hosted version for teams
 
-This open-source skill runs locally in your AI IDE.
+This skill runs inside your AI assistant. If your team wants a browser UI, file uploads and a
+review flow with no setup, join the early access list at
+**[casely.digital](https://casely.digital/)**.
 
-If you want a **browser UI, file uploads, team review flow, and zero local setup**:
-
-**[casely.digital](https://casely.digital/)** — join the early access list
-
-The hosted version is built for QA teams that want to turn requirements into review-ready test cases without writing code or running local scripts.
-
-[Learn more about the hosted version →](docs/hosted-web-version.md)
-
----
-
-## FAQ
-
-<details>
-<summary>Does it work with scanned PDFs?</summary>
-
-Yes. Casely uses Docling's OCR pipeline, which handles scanned documents, embedded tables, and mixed-format pages.
-
-</details>
-
-<details>
-<summary>Can I use my own Excel column structure?</summary>
-
-That's the core feature. Drop your existing template into `input/` and run `/style`. Casely reads your column names and replicates them exactly — no configuration file needed.
-
-</details>
-
-<details>
-<summary>Does it support Russian-language requirements?</summary>
-
-Yes. The parser and generator work with English and Russian documents. Column names in your Excel template are preserved as-is.
-
-</details>
-
-<details>
-<summary>Which test management systems are supported for import?</summary>
-
-Any TMS that accepts Excel import: TestRail, Qase, Zephyr, Xray, and plain Excel. Because Casely replicates your own column structure, the output matches whatever format your team already uses.
-
-</details>
-
-<details>
-<summary>What's the difference between the skill and the hosted version?</summary>
-
-The skill runs locally inside your AI IDE (Claude Code, Cursor, etc.) — full control, no cloud, free forever.  
-The hosted version at [casely.digital](https://casely.digital/) adds a browser UI, team review workflows, and cloud storage — no local setup required.
-
-</details>
+[More about the hosted version →](docs/hosted-web-version.md)
 
 ---
 
 ## Contributing
 
-Contributions are welcome. Please read [CONTRIBUTING.md](CONTRIBUTING.md) before opening a pull request.
+Read [CONTRIBUTING.md](CONTRIBUTING.md) before opening a pull request.
 
-- 🐛 **Found a bug?** [Open an issue](https://github.com/JohnWayneeee/casely-qa-skill/issues/new?template=bug_report.md)
-- 💡 **Have an idea?** [Request a feature](https://github.com/JohnWayneeee/casely-qa-skill/issues/new?template=feature_request.md)
-- ⭐ **Did it help?** Star the repo — it helps other QA engineers find this tool
-
----
-
-## ⭐ Star History
-
-If Casely saved you a work week, a star helps others find it.
-
-[![Star History Chart](https://api.star-history.com/svg?repos=JohnWayneeee/casely-qa-skill&type=Date)](https://star-history.com/#JohnWayneeee/casely-qa-skill&Date)
+- 🐛 [Report a bug](https://github.com/JohnWayneeee/casely-qa-skill/issues/new?template=bug_report.md)
+- 💡 [Request a feature](https://github.com/JohnWayneeee/casely-qa-skill/issues/new?template=feature_request.md)
+- ⭐ [Star the repo](https://github.com/JohnWayneeee/casely-qa-skill/stargazers) if it saved you a work week
 
 ---
 
 ## License
 
-[MIT](LICENSE) — free to use, modify, and distribute.
-
----
+[MIT](LICENSE)
 
 <div align="center">
 
-*Made for QA engineers who were hired to find bugs, not write documents.*
-
-**[casely.digital](https://casely.digital/) — the hosted version for teams**
+*Made for QA engineers who find bugs. Casely writes the documents.*
 
 </div>
