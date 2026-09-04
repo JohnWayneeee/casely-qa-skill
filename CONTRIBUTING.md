@@ -9,9 +9,10 @@ Thank you for your interest in improving Casely. Contributions of all kinds are 
 Use the [bug report template](https://github.com/JohnWayneeee/casely-qa-skill/issues/new?template=bug_report.md).
 
 Include:
-- The command you ran (`/parse`, `/export`, etc.)
+- What you attached and what you asked Casely for
+- Which surface you used (Claude Code, claude.ai, desktop)
 - What happened vs. what you expected
-- Your Python version and OS
+- Your Python version and OS (if it involves the export script)
 - A minimal reproduction if possible
 
 ### 2. Request a feature
@@ -32,23 +33,26 @@ Good feature requests explain the problem they solve, not just the implementatio
 3. Test your changes:
    ```bash
    uv sync
-   # run a quick /init → /parse → /export cycle on sample data
+   # add/update a case in skill/casely/evals/evals.json for behavior changes
+   # for export changes, run scripts/export_to_xlsx.py against sample .md files
    ```
 
 4. Commit with a clear message:
    ```
-   fix: handle missing columns in /style gracefully
-   feat: add /generate security test type
-   docs: clarify /plan output format in SKILL.md
+   fix: handle missing columns in the style guide phase gracefully
+   feat: add a security test type to the generation phase
+   docs: clarify the test plan approval gate in SKILL.md
    ```
 
 5. Open a pull request against `main`. Describe what changed and how you tested it.
 
 ## Code style
 
-- Python: follow PEP 8. No extra dependencies beyond `docling` and `openpyxl` unless discussed in an issue first.
+- Python: follow PEP 8. No extra dependencies beyond `openpyxl` unless discussed in an issue
+  first — Casely intentionally reads documents natively instead of bundling a parser.
 - Markdown: use ATX headings (`##`), fenced code blocks with language tags.
-- Keep the `SKILL.md` and `README.md` in sync if you change commands or workflow steps.
+- Keep `SKILL.md`, `README.md`, and `skill/casely/evals/evals.json` in sync if you change
+  workflow phases or behavior.
 
 ## Commit message convention
 

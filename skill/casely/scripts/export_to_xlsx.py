@@ -6,7 +6,7 @@ import re
 import sys
 import argparse
 from pathlib import Path
-from typing import Optional, List, Tuple
+from typing import List, Tuple
 
 try:
     from openpyxl import Workbook
@@ -19,6 +19,9 @@ except ImportError:
 
 MIN_COL_WIDTH = 10
 MAX_COL_WIDTH = 60
+
+DEFAULT_RESULTS_DIR = "results"
+DEFAULT_OUTPUT_DIR = "exports"
 
 
 def _split_table_row(line: str) -> List[str]:
@@ -137,44 +140,22 @@ def export_to_xlsx(results_dir: str, output_path: str) -> None:
         print(f"Exported: {dest_file.name}")
 
 
-
-def find_latest_project() -> Optional[Path]:
-    """Find the most recently modified project directory."""
-    projects_dir = Path("projects")
-    if not projects_dir.exists():
-        return None
-
-    subdirs = [d for d in projects_dir.iterdir() if d.is_dir()]
-    if not subdirs:
-        return None
-
-    return max(subdirs, key=lambda d: d.stat().st_mtime)
-
-
 def main() -> None:
     """CLI interface for the exporter."""
     arg_parser = argparse.ArgumentParser(
         description='Casely Export — Markdown to Excel converter'
     )
-    arg_parser.add_argument('results_dir', nargs='?', help='Path to results MD files')
-    arg_parser.add_argument('output_path', nargs='?', help='Path to export XLSX files')
+    arg_parser.add_argument(
+        'results_dir', nargs='?', default=DEFAULT_RESULTS_DIR,
+        help=f"Path to results MD files (default: '{DEFAULT_RESULTS_DIR}')",
+    )
+    arg_parser.add_argument(
+        'output_path', nargs='?', default=DEFAULT_OUTPUT_DIR,
+        help=f"Path to export XLSX files (default: '{DEFAULT_OUTPUT_DIR}')",
+    )
     args = arg_parser.parse_args()
 
-    results_dir: Optional[str] = args.results_dir
-    output_path: Optional[str] = args.output_path
-
-    # If arguments are not provided, try to find the project automatically
-    if not results_dir or not output_path:
-        latest = find_latest_project()
-        if latest is not None:
-            results_dir = str(latest / "results")
-            output_path = str(latest / "exports")
-            print(f"Auto-detected project: {latest.name}")
-        else:
-            print("Error: No paths provided and no projects found in 'projects/' directory.")
-            sys.exit(1)
-
-    export_to_xlsx(results_dir, output_path)
+    export_to_xlsx(args.results_dir, args.output_path)
 
 
 if __name__ == '__main__':

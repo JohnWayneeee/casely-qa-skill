@@ -1,18 +1,21 @@
 # Export Guide: Markdown to Excel
 
-This guide describes how Casely converts generated Markdown test cases into formatted Excel files for TMS import.
+This guide describes how Casely converts generated Markdown test cases into formatted Excel
+files for TMS import (Phase 5 of the workflow).
 
 ## Overview
 
-The `export_to_xlsx.py` script parses Markdown tables and recreates them in an Excel workbook using the `openpyxl` library.
+The `export_to_xlsx.py` script parses Markdown tables and recreates them in an Excel workbook
+using the `openpyxl` library.
 
 ## Features
 
 - **Column Mapping:** Automatically maps Markdown headers to Excel columns.
-- **Formatting:** Applies bold fonts and background fills to headers.
+- **Formatting:** Applies bold fonts and centered alignment to headers.
 - **Auto-Width:** Calculates appropriate column widths based on content.
 - **Multi-line Support:** Correctly handles line breaks (`<br>` or `\n`) within cells.
-- **Styling:** Adds borders and alternating row colors for readability.
+- **Atomic 1:1 Export:** One `.md` test case in `results/` becomes exactly one `.xlsx` file in
+  `exports/`, with the same base name.
 
 ## Usage
 
@@ -22,14 +25,17 @@ Run the script from the command line:
 python scripts/export_to_xlsx.py <results_dir> <output_dir>
 ```
 
-- `results_dir`: Directory containing the `.md` files to export.
+- `results_dir`: Directory containing the `.md` files to export. Defaults to `results/` in the
+  current working directory if omitted.
 - `output_dir`: Directory where the `.xlsx` files will be created (one per Markdown file).
+  Defaults to `exports/` in the current working directory if omitted.
 
-If you omit both arguments, the script will:
-
-- Automatically detect the most recently modified project under `projects/`
-- Use its `results/` folder as the source and `exports/` as the output directory
+There is no project auto-detection: Casely no longer maintains a persistent `projects/`
+directory tree. Run the script from wherever the current conversation's `results/` folder
+lives, or pass explicit paths.
 
 ## Handling Special Characters
 
-The script cleans worksheet names by removing illegal characters (like `\ / * ? [ ] :`) to ensure Excel compatibility.
+Multi-line cell content using `<br>` or literal newlines is converted to wrapped text within
+the cell. Column widths auto-fit to the longest line in each column, capped between 10 and 60
+characters.

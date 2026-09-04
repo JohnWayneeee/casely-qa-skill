@@ -3,27 +3,39 @@
   "evals": [
     {
       "id": 1,
-      "prompt": "Initialize a new testing project for the 'Payments' feature. I have requirement documents and some previous test case examples.",
-      "expected_output": "Skill creates the standard directory structure under projects/Payments/, checks the environment (venv and libraries), and guides the user on where to place files.",
-      "files": []
+      "prompt": "Here are the requirements for the Payments module and a couple of example test cases my team already writes. Give me test cases for the refund flow.",
+      "expected_output": "Casely reads both attachments directly (no parsing script or command), extracts the exact column structure and tone from the example test cases, scopes to the refund flow, and produces a test plan (module breakdown, coverage tiers, estimated case count) — then explicitly stops and asks the user to approve or adjust the plan before generating anything.",
+      "files": ["requirements_payments.pdf", "example_test_cases.xlsx"]
     },
     {
       "id": 2,
-      "prompt": "I've uploaded my files and run the parser. Now create a style guide based on my parsed examples in the 'processed' folder.",
-      "expected_output": "Skill analyzes the Markdown tables in the processed folder that originated from examples, extracts column structure and writing style, and generates a comprehensive test_style_guide.md.",
+      "prompt": "That plan looks good, go ahead.",
+      "expected_output": "Casely treats this as approval of the previously presented test plan and generates atomic test cases: one Markdown file per test case, each with a single horizontal table row, matching the style guide's columns exactly, named `{type}_{id}_{short_description}.md`.",
       "files": []
     },
     {
       "id": 3,
-      "prompt": "Based on the requirements in the 'processed' folder and use the 'test_style_guide.md', generate a suite of atomic functional test cases.",
-      "expected_output": "Skill identifies features from requirements, applies the style guide formatting, and generates atomic test cases (one scenario per row) in the results directory.",
+      "prompt": "Actually only cover the smoke tier, and add negative cases too.",
+      "expected_output": "Casely revises the test plan (scope: smoke tier + negative type), presents the updated plan, and again waits for explicit approval before generating any test cases — it does not generate on this turn.",
       "files": []
     },
     {
       "id": 4,
-      "prompt": "Everything looks good. Export the generated test cases to a formatted Excel file for my TMS.",
-      "expected_output": "Skill executes the export script to convert Markdown tables in the results folder into a professional .xlsx file in the exports folder.",
+      "prompt": "Export everything to Excel for TestRail.",
+      "expected_output": "Casely runs scripts/export_to_xlsx.py against the current results/ folder, producing one .xlsx file per generated test case in exports/ with columns matching the style guide, and delivers the file(s) to the user.",
       "files": []
+    },
+    {
+      "id": 5,
+      "prompt": "I only have requirements, no example test cases to show you.",
+      "expected_output": "Casely asks once whether the user has an example test case file to attach; if the user confirms they don't have one, Casely proceeds with a sensible default column structure (ID, Title, Preconditions, Steps, Expected Result, Priority) instead of blocking the workflow.",
+      "files": ["requirements_only.docx"]
+    },
+    {
+      "id": 6,
+      "prompt": "Here's our full requirements doc covering Auth, Payments, and Profile — write me some test cases.",
+      "expected_output": "Because the requirements span multiple unrelated modules and the user didn't specify one, Casely lists the detected modules (e.g. '1. Auth  2. Payments  3. Profile') and asks which to cover, rather than guessing or generating for all of them silently.",
+      "files": ["requirements_full.pdf"]
     }
   ]
 }

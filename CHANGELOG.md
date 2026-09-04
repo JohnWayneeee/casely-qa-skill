@@ -7,6 +7,32 @@ Versions follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ---
 
+## [2.0.0] — 2026-09-04
+
+### Changed — full workflow overhaul
+- **Replaced the command-driven workflow with a single conversation.** `/init`, `/parse`,
+  `/style`, `/plan`, `/generate`, and `/export` no longer exist as commands. Attach requirement
+  documents and (optionally) example test cases, describe what you need, and Casely runs the
+  whole pipeline in one conversation.
+- **Dropped the `docling` parser and OCR dependency entirely.** Claude reads PDF/DOCX/XLSX
+  attachments natively; `scripts/casely_parser.py` and `references/parser_usage.md` are
+  removed. `openpyxl` is now the only dependency.
+- **Added a mandatory approval gate on the test plan.** Casely always stops after proposing
+  coverage (modules, tiers, estimated case count) and waits for explicit approval before
+  generating any test case. Every other phase proceeds without extra confirmation.
+- **Removed persistent `projects/<name>/` scaffolding.** Each conversation is self-contained;
+  `export_to_xlsx.py` now defaults to `results/` → `exports/` in the working directory instead
+  of auto-detecting a project folder.
+- Rewrote `SKILL.md`, `README.md`, evals, and reference docs around the new flow. This is the
+  same skill everywhere: Claude Code, claude.ai (web), and the Claude desktop app.
+
+### Why
+The command-based flow assumed a local terminal and a persistent project folder — a poor fit
+for QA engineers who mostly use Claude in the browser or desktop app. The new flow needs
+nothing but an attachment and a sentence.
+
+---
+
 ## [1.5.0] — 2026-05-22
 
 ### Added

@@ -5,10 +5,10 @@
     "github": "JohnWayneeee"
   },
   "metadata": {
-    "description": "PDF/DOCX to TestRail-ready test cases. Parse, Style, Plan, Generate, and Export.",
-    "version": "1.5.0",
+    "description": "Attach requirements + example test cases, get TestRail-ready test cases back. One conversation, no commands.",
+    "version": "2.0.0",
     "category": "QA Automation, QA manual",
-    "tags": ["qa", "testing", "testrail", "test-cases", "automation", "docling", "pdf", "excel", "qase", "istqb"],
+    "tags": ["qa", "testing", "testrail", "test-cases", "automation", "requirements", "pdf", "excel", "qase", "istqb"],
     "icon": "https://raw.githubusercontent.com/JohnWayneeee/casely-qa-skill/main/assets/logo.png",
     "homepage": "https://casely.digital/",
     "repository": "https://github.com/JohnWayneeee/casely-qa-skill",
@@ -17,7 +17,7 @@
   "plugins": [
     {
       "name": "casely",
-      "description": "Intelligent QA assistant: messy docs → atomic test cases → TestRail Excel",
+      "description": "Virtual QA Lead: attach requirements + examples, approve the plan, get atomic test cases and a TestRail-ready Excel export",
       "source": "./",
       "strict": false,
       "skills": [

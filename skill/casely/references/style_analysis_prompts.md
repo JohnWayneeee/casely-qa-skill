@@ -1,6 +1,8 @@
 # Test Style Analysis Methodology
 
-This document outlines how Casely extracts formatting and stylistic rules from example test cases to ensure consistent generation.
+This document outlines how Casely extracts formatting and stylistic rules from example test
+cases to ensure consistent generation. This runs as Phase 2 of the workflow, inline in the same
+conversation as everything else — there is no separate step or tool the user has to invoke.
 
 ## Analysis Process
 
@@ -20,7 +22,9 @@ This document outlines how Casely extracts formatting and stylistic rules from e
 
 ## Persistence
 
-The results of this analysis are saved in the project's `test_style_guide.md`. This file serves as the strict template for all future generations.
+The results of this analysis are kept as `test_style_guide.md` for the current conversation.
+This file serves as the strict template for every test case generated afterward, until the
+user asks to change it.
 
 ## Language Detection
 
