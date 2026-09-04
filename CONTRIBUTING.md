@@ -37,6 +37,11 @@ Good feature requests explain the problem they solve, not just the implementatio
    # behaviour changes: add or update a case in skill/casely/evals/evals.json
    ```
 
+   For anything that touches the workflow, also run the end-to-end check in
+   [`examples/`](examples/README.md): attach the two fixture files in a fresh chat and score
+   the run against the rubric. Report the score in your pull request, with the chat export
+   and the workbook attached.
+
 4. Commit with a clear message:
    ```
    fix: handle missing columns in the style guide phase gracefully
