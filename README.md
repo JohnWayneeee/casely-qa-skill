@@ -70,12 +70,21 @@ bunx skills add JohnWayneeee/casely-qa-skill
 
 **claude.ai and Claude desktop**
 
-1. Zip the `skill/casely/` folder from this repo.
-2. Open **Settings → Features → Skills** and upload the zip.
-3. Start a chat, attach your files, describe what you need.
+1. Clone or download this repo, then zip the skill **from inside `skill/`** so `casely/`
+   sits at the root of the archive (not nested under `skill/`):
+   ```bash
+   cd skill && zip -r casely.zip casely
+   ```
+2. On claude.ai, open **Settings → Capabilities**, turn on **Code execution** if it isn't
+   already, then go to **Skills → Create skill** and upload `casely.zip`.
+3. The Claude desktop app uses the same account, so the skill is available there too —
+   nothing to install separately.
+4. Start a chat, attach your files, describe what you need.
 
 Nothing to install locally. The export step uses `openpyxl`, which already ships inside
-Claude's code execution environment.
+Claude's code execution environment. Custom skills are private to your account (Pro, Max,
+Team, or Enterprise plan required) and won't sync to a Claude Code install — set that up
+separately with the command above.
 
 ---
 
