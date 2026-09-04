@@ -70,17 +70,19 @@ bunx skills add JohnWayneeee/casely-qa-skill
 
 **claude.ai and Claude desktop**
 
-1. Build the upload archive. Claude reads `SKILL.md` from the top-level folder of the zip,
-   so GitHub's own "Download ZIP" will not work — it wraps everything in
-   `casely-qa-skill-main/skill/casely/`. Clone the repo and zip from inside `skill/`:
+1. Get the upload archive, already zipped with `casely/` at its root:
+   [download casely-v2.1.0.zip](https://github.com/JohnWayneeee/casely-qa-skill/releases/download/v2.1.0/casely-v2.1.0.zip)
+   from the [latest release](https://github.com/JohnWayneeee/casely-qa-skill/releases/latest).
+
+   Building it yourself works too — just not GitHub's own "Download ZIP" button, which wraps
+   everything in `casely-qa-skill-main/skill/casely/` instead of putting `SKILL.md` at the
+   archive root, which is what claude.ai requires:
    ```bash
    git clone https://github.com/JohnWayneeee/casely-qa-skill.git
    cd casely-qa-skill/skill && zip -r casely.zip casely
    ```
-   The archive should list `casely/SKILL.md`, not `skill/casely/SKILL.md`. Check with
-   `unzip -l casely.zip`.
 2. On claude.ai, open **Settings → Capabilities**, turn on **Code execution** if it isn't
-   already, then go to **Skills → Create skill** and upload `casely.zip`.
+   already, then go to **Skills → Create skill** and upload the zip.
 3. The Claude desktop app uses the same account, so the skill is available there too —
    nothing to install separately.
 4. Start a chat, attach your files, describe what you need.
