@@ -4,7 +4,7 @@
 
 <img src="assets/opengraph-image.png" alt="Casely — AI QA Test Case Generator" width="720">
 
-**Attach your requirements. Approve the plan. Get a TestRail-ready Excel back.**  
+**Attach your requirements and approve one plan. Casely returns a TestRail-ready Excel file.**  
 Free, open-source QA skill for Claude Code, claude.ai and the Claude desktop app.
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
@@ -29,11 +29,11 @@ Free, open-source QA skill for Claude Code, claude.ai and the Claude desktop app
 
 ## The problem
 
-You were hired to find bugs. You spend 40% of the week writing test cases instead.
+You were hired to find bugs, and 40% of your week goes into writing test cases.
 
-Requirements land as unstructured PDFs. Every project renames the columns, so you remap them
-each sprint. One module takes two days to document, and then the TestRail import fails because
-the headers don't match.
+Requirements land as unstructured PDFs. Projects rename the columns, so you remap them each
+sprint. One module takes two days to document, and then the TestRail import fails because the
+headers don't match.
 
 ---
 
@@ -196,6 +196,6 @@ Read [CONTRIBUTING.md](CONTRIBUTING.md) before opening a pull request.
 
 <div align="center">
 
-*Made for QA engineers who were hired to find bugs, not write documents.*
+*Made for QA engineers who find bugs. Casely writes the documents.*
 
 </div>
