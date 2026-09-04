@@ -21,8 +21,9 @@ document.
 4. Answer the plan question the way a QA lead would, then let it generate and export.
 5. Score the run below.
 
-Use the strongest model available with extended thinking on. Plan quality and gap detection
-drop noticeably on smaller models; the export step behaves the same everywhere.
+Run it on Opus. Plan quality and gap detection drop noticeably on smaller models; the export
+step behaves the same everywhere. Score two runs on different models only if you are
+comparing models, not skill changes.
 
 ## Rubric
 

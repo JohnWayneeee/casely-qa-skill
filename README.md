@@ -90,10 +90,9 @@ Claude's code execution environment. Custom skills are private to your account (
 Team, or Enterprise plan required) and won't sync to a Claude Code install — set that up
 separately with the command above.
 
-**Pick Opus with extended thinking on.** The plan phase decides what gets tested at all:
-which boundaries matter, which conditions combine, which requirement is too vague to test.
-Smaller models write acceptable cases from a plan they were handed, and miss holes in the
-spec. Everything after the plan costs little, so the reasoning budget pays for itself once.
+**Pick Opus.** The plan phase decides what gets tested at all: which boundaries matter,
+which conditions combine, which requirement is too vague to test. Smaller models write
+acceptable cases from a plan they were handed, and miss the holes in the spec.
 
 ---
 
