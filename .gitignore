@@ -32,8 +32,9 @@ htmlcov/
 .DS_Store
 Thumbs.db
 
-# Project runtime data (создаётся пользователем, не нужно в репо)
-projects/
+# Working files the skill creates during a conversation (Phase 4/5 output)
+results/
+exports/
 
 # Local agent / skills tooling (not for repo)
 .agent/
