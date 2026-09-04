@@ -18,8 +18,7 @@ Free, open-source QA skill for Claude Code, claude.ai and the Claude desktop app
 
 ## Watch it work
 
-📹 [Download the walkthrough video](assets/casely-walkthrough-small.mp4) — GitHub doesn't inline-play
-`.mp4` files committed to a repo, so click through to watch or download it directly.
+https://github.com/user-attachments/assets/57f086c4-ec92-4a60-bc58-a00cc9757ee0
 
 ---
 
