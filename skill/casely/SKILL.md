@@ -103,7 +103,13 @@ Attach files + describe the ask
    the team has reached. New cases continue that scheme rather than starting a parallel one.
 4. Detect language, tone, and phrasing patterns (numbered vs. bulleted preconditions, verb
    tense in steps, single-sentence vs. grouped expected results).
-5. Summarize the style guide in a couple of lines as part of the reply — e.g. "Style guide:
+5. Check whether the format has a column for the source requirement (`Requirement`, `REQ`,
+   `Раздел ТЗ`, `Reference`). Most team formats don't. Never invent one — the style guide
+   wins — but say so in the plan: "your format has no column for the requirement reference,
+   so traceability will live only in the plan table. Want me to add one?" Silently dropping
+   it leaves the user unable to prove coverage to an analyst, and they find out after the
+   import.
+6. Summarize the style guide in a couple of lines as part of the reply — e.g. "Style guide:
    7 columns (ID, Title, Preconditions, Steps, Expected Result, Priority, Component), Russian,
    numbered preconditions, IDs continue from PAY-042." Keep the full guide in
    `test_style_guide.md` for the rest of the conversation. If the user corrects it, carry the
@@ -128,14 +134,27 @@ useful suite from a restatement of the requirements.
    Anything with zero planned cases is either an oversight or deliberately out of scope; say
    which.
 5. Note test data needs (valid/edge values, mocks) where the requirements imply them.
-6. **Report gaps in the requirements.** While reading the spec, collect anything untestable,
+6. **Cross-check the numbers across sections before writing the plan.** Collect every limit,
+   threshold, timeout and count in scope, then read each worked example and each other
+   section against them. A stated limit of 50 000 and an example showing 75 000 succeeding
+   contradict each other, and the contradiction decides how many cases the limit needs — so
+   it belongs in the plan, not in a postscript after generation. Do this sweep deliberately;
+   a contradiction spotted while writing case 27 has already cost the user an approval.
+7. **Report gaps in the requirements.** While reading the spec, collect anything untestable,
    ambiguous, contradictory, or silent on the error path (see the last section of
    `references/test_design.md`) and present it as a short list with section references. This
    is often the most valuable thing in the reply — it catches problems while they are still
    cheap to fix, and it is what a QA lead does that a generator does not.
-7. **Present the plan as a table** — Module | Level | Estimated Cases | Type | Notes — with a
-   total case count.
-8. **Stop and ask for approval before generating anything:** e.g. "Does this plan look right?
+
+   Two patterns are easy to read past, so check for them by name: a term the spec gates
+   behaviour on but never defines, and an external dependency whose failure it never
+   describes. Writing a resilience case from experience does not close the second one — the
+   missing decision still belongs in the list.
+8. **Present the plan as a table** — Module | Level | Estimated Cases | Type | Notes — with a
+   total case count. Every value in the Type column has to appear in the generated suite; if
+   the style guide's taxonomy has no word for a type you planned, plan the type the team
+   actually uses instead of promising one you cannot label.
+9. **Stop and ask for approval before generating anything:** e.g. "Does this plan look right?
    I can adjust scope (smoke/critical/full), add or drop a module, or change which types to
    generate (functional, negative, boundary, integration, smoke, security). Say 'go' or tell
    me what to change." Wait for the user's reply. This gate exists so nobody receives 50 test

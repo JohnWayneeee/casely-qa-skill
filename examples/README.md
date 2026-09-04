@@ -80,6 +80,32 @@ Three points each, for naming the problem and asking a concrete question:
 - [ ] 3 — Headers in the workbook match the example file
 - [ ] 3 — Multi-line steps appear as real line breaks in the cell, not as literal `<br>`
 
+## Recorded runs
+
+| Date | Version | Score | Notes |
+|------|---------|-------|-------|
+| 2026-09-04 | 2.1.0 | **85 / 100** | First full run. Export, decision table and state transitions clean; missed two of the five planted gaps |
+
+The 2026-09-04 run produced 33 cases from WLT-0015, matched all nine columns in order, and
+exported one workbook with no rejected case. It scored full marks on export and near-full on
+test design: five decision-table cases from §6.1, one per failing condition, and the card-age
+boundary tested in hours rather than days.
+
+It lost points in three places, all since fixed:
+
+- Two planted gaps went unreported — "подтверждённый статус" gated every precondition without
+  ever being defined, and §2.2 never says what happens when the payment provider fails. Both
+  are now named patterns in `test_design.md`.
+- The §3.2 / §3.7 limit contradiction surfaced after generation instead of in the plan, where
+  it decides how many cases the limit needs. Phase 3 now sweeps limits against worked examples
+  before the plan goes out.
+- No case referenced its requirement section. The team format has no column for it, and
+  inventing one would have broken the import — the right call, made silently. Phase 2 now says
+  so out loud and offers to add the column.
+
+Two expected results also offered a choice ("либо ... либо", "one of created or pending"),
+which a tester cannot mark pass or fail. The quality bar now rules that out.
+
 ## Reporting a run
 
 Keep the chat export, the workbook and the generated Markdown. A score without the artefacts

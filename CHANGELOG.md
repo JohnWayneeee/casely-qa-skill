@@ -26,7 +26,15 @@ Versions follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
   tables, state transitions and error guessing, plus the quality bar for a written case and
   coverage integrity checks. Read before planning and generation.
 - **Requirement gap reporting.** The plan phase now flags untestable wording, ambiguity,
-  contradictions and missing error paths, with section references.
+  contradictions and missing error paths, with section references. Two patterns that read
+  as understood are called out by name: a term the spec gates behaviour on without defining
+  it, and an external dependency whose failure it never describes.
+- Phase 3 cross-checks limits, thresholds and timeouts against the spec's own worked
+  examples before the plan goes out, so a contradiction costs one approval instead of two.
+- Phase 2 reports when the team's format has no column for the source requirement, and
+  offers to add one, instead of dropping traceability without a word.
+- Boundary coverage requires both sides of every edge, and an expected result may no longer
+  offer a choice of outcomes.
 - Case IDs continue the numbering scheme found in the user's example file.
 - Traceability: cases record the requirement or section they came from.
 - Evals expanded to 8 cases with 34 formal assertions, covering the approval gate, the

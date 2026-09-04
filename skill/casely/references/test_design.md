@@ -47,6 +47,11 @@ confused. For a range of 1–100 000, test `0, 1, 100 000, 100 001` — the valu
 side of every boundary. Pair this with equivalence partitioning: partitions tell you
 *which* groups exist, boundaries tell you *where they touch*.
 
+Cover **both sides of every edge**. A suite with `100 000` and `100 001` but no `99 999`
+proves the limit rejects, never that it accepts up to the limit — an off-by-one that
+shifted the boundary down would pass. Same rule for time and age limits: a card usable
+after 3 days needs 71 hours, 72 hours, and 73 hours, not just the rejection.
+
 ### Decision tables
 
 When an outcome depends on several conditions at once, list the combinations
@@ -97,6 +102,11 @@ having run. Suites get reordered, parallelized, and partially executed.
 "Balance decreases by 500 ₽ and a transaction appears in history with status
 *Completed*" is verifiable. "Transfer works correctly" is an opinion.
 
+One outcome per case, never a menu. "The minus sign is rejected **or** an error appears",
+"the operation ends in **one of** created or pending" — a tester cannot mark either
+pass or fail, so the case checks nothing. A genuine fork is two cases; an undecided spec
+is a gap to report, and the case is written against a stated assumption.
+
 **Reproducible data** — name the actual input. "Amount: 100 001" beats "an amount over
 the limit", because the next person does not have to re-derive the limit.
 
@@ -140,6 +150,17 @@ silently guesses. Flag a requirement when it is:
   flow is not mentioned at all. This is the most common gap.
 - **Missing a rule the tests need** — rounding, time zone, currency conversion,
   retention period, permission matrix.
+- **A gating term that is never defined** — the spec makes an outcome depend on a status
+  or role it never specifies ("available to a *verified* user", "*premium* accounts may
+  export"). It reads as understood, so it survives review, and then nobody can build the
+  precondition. Ask where the state is set, how a tester puts an account into it, and what
+  the user sees without it. This one hides in plain sight: if a phrase keeps landing in
+  your preconditions and the spec never defines it, that is the gap.
+- **An external dependency whose failure is unspecified** — the spec names a payment
+  provider, an SMS gateway or a third-party API, describes the happy path, and says
+  nothing about a timeout, a rejection or an outage. Writing a resilience case from
+  experience is not enough; the missing decision belongs in the gap list, because only
+  the analyst can say whether the operation retries, fails, or holds the funds.
 
 Report them as a short list with the section reference and the specific question. Where
 a gap blocks a case, write the case against a stated assumption and mark the assumption

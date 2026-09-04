@@ -6,7 +6,10 @@
       "name": "plan-gate-before-generating",
       "prompt": "Here are the requirements for the Payments module and a couple of example test cases my team already writes. Give me test cases for the refund flow.",
       "expected_output": "Casely reads both attachments directly, clones the example's column structure, scopes to the refund flow, presents a test plan with module breakdown and estimated case count, and stops for approval instead of generating cases.",
-      "files": ["requirements_payments.pdf", "example_test_cases.xlsx"],
+      "files": [
+        "requirements_payments.pdf",
+        "example_test_cases.xlsx"
+      ],
       "assertions": [
         "No test case files are generated on this turn",
         "A test plan is presented containing module breakdown and an estimated case count",
@@ -61,7 +64,9 @@
       "name": "missing-style-example",
       "prompt": "I only have requirements, no example test cases to show you.",
       "expected_output": "Casely asks once for an example, then proceeds with a default column structure rather than blocking.",
-      "files": ["requirements_only.docx"],
+      "files": [
+        "requirements_only.docx"
+      ],
       "assertions": [
         "Casely asks at most once whether an example test case file exists",
         "The workflow continues with a default structure if the user has no example",
@@ -73,7 +78,9 @@
       "name": "ambiguous-scope-asks-which-module",
       "prompt": "Here's our full requirements doc covering Auth, Payments, and Profile — write me some test cases.",
       "expected_output": "Casely lists the detected modules and asks which to cover instead of silently generating for all three.",
-      "files": ["requirements_full.pdf"],
+      "files": [
+        "requirements_full.pdf"
+      ],
       "assertions": [
         "The detected modules are listed back to the user",
         "Casely asks which module(s) to cover before planning",
@@ -85,12 +92,17 @@
       "name": "reports-requirement-gaps",
       "prompt": "Requirements attached for the withdrawal feature. Plan the test coverage. Note the spec says withdrawals should be 'processed quickly' and gives a limit of 50000 in one section but shows a successful 75000 withdrawal in an example.",
       "expected_output": "Alongside the plan, Casely reports the untestable 'processed quickly' wording and the contradiction between the stated limit and the example.",
-      "files": ["requirements_withdrawal.pdf"],
+      "files": [
+        "requirements_withdrawal.pdf"
+      ],
       "assertions": [
         "The vague 'processed quickly' requirement is flagged as untestable with a request for a concrete threshold",
         "The contradiction between the 50000 limit and the 75000 example is flagged",
         "Gaps are reported as a distinct list with section references, separate from the plan table",
-        "The plan is still delivered rather than withheld pending answers"
+        "The plan is still delivered rather than withheld pending answers",
+        "A status the spec gates behaviour on but never defines is flagged, with a question about how a tester puts an account into it",
+        "An external dependency whose failure behaviour the spec omits is flagged as a gap, not silently covered by a resilience case",
+        "Contradictions between a stated limit and a worked example appear in the plan, not after generation"
       ]
     },
     {
