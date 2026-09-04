@@ -16,8 +16,8 @@ document.
 
 1. Start a new chat with the skill installed. Nothing from an earlier conversation.
 2. Attach both files.
-3. Ask: *«Вот требования на модуль Кошелёк и примеры тест-кейсов, которые пишет моя команда.
-   Нужны тест-кейсы на вывод средств.»*
+3. Ask: *"Here are the requirements for the Wallet module and example test cases my team
+   writes. I need test cases for the withdrawal flow."*
 4. Answer the plan question the way a QA lead would, then let it generate and export.
 5. Score the run below.
 
@@ -32,10 +32,10 @@ comparing models, not skill changes.
 ### Style guide fidelity — 15
 
 - [ ] 3 — All nine columns present, spelled as in the example
-- [ ] 3 — Column order matches the example, including `Автотест` last
+- [ ] 3 — Column order matches the example, including `Automated` last
 - [ ] 3 — Priority values come from the team's set (Blocker / Critical / Major / Minor), not High/Medium/Low
-- [ ] 3 — `Тип` values reuse Позитивный / Негативный / Граничный
-- [ ] 3 — Output is in Russian, matching the example
+- [ ] 3 — `Type` values reuse Positive / Negative / Boundary
+- [ ] 3 — Output language matches the example (English)
 
 ### Approval gate — 15
 
@@ -48,15 +48,15 @@ comparing models, not skill changes.
 
 Three points each, for naming the problem and asking a concrete question:
 
-- [ ] §3.5 «должен обрабатываться быстро» — no measurable threshold
-- [ ] §3.2 vs §3.7 — the 50 000 ₽ operation limit contradicts the successful 75 000 ₽ example
+- [ ] §3.5 "should be processed quickly" — no measurable threshold
+- [ ] §3.2 vs §3.7 — the $50,000 operation limit contradicts the successful $75,000 example
 - [ ] §3.3 — a fee is withheld but its size is never given
-- [ ] §1.3 — "подтверждённый статус" is used as a gate but never defined
+- [ ] §1.3 — "verified status" is used as a gate but never defined
 - [ ] §2.2 — no behaviour specified when the payment provider times out or is unavailable
 
 ### Test design — 20
 
-- [ ] 5 — Boundary cases on the withdrawal limit: 49 999, 50 000, 50 001
+- [ ] 5 — Boundary cases on the withdrawal limit: 49,999 / 50,000 / 50,001
 - [ ] 4 — Card age boundary: 2 days rejected, 3 days accepted
 - [ ] 4 — SMS code: third wrong attempt locks for 15 minutes, code expiry at 5 minutes
 - [ ] 4 — Decision table from §6.1 — each condition failing on its own
@@ -66,7 +66,7 @@ Three points each, for naming the problem and asking a concrete question:
 
 - [ ] 5 — One case checks one thing; no case bundles three unrelated assertions
 - [ ] 5 — Expected results name an observable outcome, with the exact message text where the spec gives one
-- [ ] 5 — Steps carry concrete data (amounts, phone numbers), not "введите сумму"
+- [ ] 5 — Steps carry concrete data (amounts, phone numbers), not "enter the amount"
 - [ ] 5 — No two cases cover the same equivalence partition
 
 ### Traceability and IDs — 5
@@ -93,9 +93,9 @@ boundary tested in hours rather than days.
 
 It lost points in three places, all since fixed:
 
-- Two planted gaps went unreported — "подтверждённый статус" gated every precondition without
-  ever being defined, and §2.2 never says what happens when the payment provider fails. Both
-  are now named patterns in `test_design.md`.
+- Two planted gaps went unreported — "verified status" gated every precondition without ever
+  being defined, and §2.2 never says what happens when the payment provider fails. Both are
+  now named patterns in `test_design.md`.
 - The §3.2 / §3.7 limit contradiction surfaced after generation instead of in the plan, where
   it decides how many cases the limit needs. Phase 3 now sweeps limits against worked examples
   before the plan goes out.
@@ -103,7 +103,7 @@ It lost points in three places, all since fixed:
   inventing one would have broken the import — the right call, made silently. Phase 2 now says
   so out loud and offers to add the column.
 
-Two expected results also offered a choice ("либо ... либо", "one of created or pending"),
+Two expected results also offered a choice ("either ... or", "one of created or pending"),
 which a tester cannot mark pass or fail. The quality bar now rules that out.
 
 ## Reporting a run

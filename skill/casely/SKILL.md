@@ -7,9 +7,8 @@ description: >
   pasted text) and wants test cases, a test plan, a checklist, test coverage, a regression
   suite, or a TestRail/Qase/Zephyr-ready export — even if they don't say "test cases" outright
   ("write tests for this spec", "what should we check here?"). Especially valuable when they
-  attach an example of their team's existing test cases to match. Works in Russian too:
-  составь тест-кейсы, тест-план, чек-лист, покрытие требований, напиши тесты по ТЗ, экспорт в
-  TestRail.
+  attach an example of their team's existing test cases to match. Also triggers on non-English
+  phrasing of the same request — the user does not have to ask in English.
 license: "MIT"
 metadata:
   author: "John Wayne"
@@ -104,7 +103,7 @@ Attach files + describe the ask
 4. Detect language, tone, and phrasing patterns (numbered vs. bulleted preconditions, verb
    tense in steps, single-sentence vs. grouped expected results).
 5. Check whether the format has a column for the source requirement (`Requirement`, `REQ`,
-   `Раздел ТЗ`, `Reference`). Most team formats don't. Never invent one — the style guide
+   `Spec Section`, `Reference`). Most team formats don't. Never invent one — the style guide
    wins — but say so in the plan: "your format has no column for the requirement reference,
    so traceability will live only in the plan table. Want me to add one?" Silently dropping
    it leaves the user unable to prove coverage to an analyst, and they find out after the

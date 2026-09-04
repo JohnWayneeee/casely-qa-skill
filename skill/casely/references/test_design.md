@@ -34,8 +34,7 @@ currency, a limit, a balance check, an account state, and an audit trail.
 ### Equivalence partitioning
 
 Split each input into groups where every value behaves the same, then test one value
-per group instead of many. The point is coverage without redundancy: if `1000 ₽` and
-`1500 ₽` exercise the same code path, testing both buys nothing.
+per group instead of many. The point is coverage without redundancy: if `1000` and `1500` exercise the same code path, testing both buys nothing.
 
 > Amount field, limit 100 000: partitions are *below minimum*, *valid*, *above limit*,
 > *non-numeric*, *empty*. Five cases, not fifty.
@@ -99,7 +98,7 @@ something broke, not what.
 having run. Suites get reordered, parallelized, and partially executed.
 
 **Deterministic expected result** — state the observable outcome, with the values.
-"Balance decreases by 500 ₽ and a transaction appears in history with status
+"Balance decreases by $500 and a transaction appears in history with status
 *Completed*" is verifiable. "Transfer works correctly" is an opinion.
 
 One outcome per case, never a menu. "The minus sign is rejected **or** an error appears",
