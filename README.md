@@ -168,9 +168,7 @@ Read [CONTRIBUTING.md](CONTRIBUTING.md) before opening a pull request.
 
 - 🐛 [Report a bug](https://github.com/JohnWayneeee/casely-qa-skill/issues/new?template=bug_report.md)
 - 💡 [Request a feature](https://github.com/JohnWayneeee/casely-qa-skill/issues/new?template=feature_request.md)
-- ⭐ Star the repo if it saved you a work week
-
-[![Star History Chart](https://api.star-history.com/svg?repos=JohnWayneeee/casely-qa-skill&type=Date)](https://star-history.com/#JohnWayneeee/casely-qa-skill&Date)
+- ⭐ [Star the repo](https://github.com/JohnWayneeee/casely-qa-skill/stargazers) if it saved you a work week
 
 ---
 
