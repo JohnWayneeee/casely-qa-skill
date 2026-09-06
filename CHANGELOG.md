@@ -7,6 +7,38 @@ Versions follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ---
 
+## [2.2.0] — 2026-09-06
+
+### Added
+- **Postman collections for API test cases.** When the requirements describe an API — endpoints
+  as method + path, an OpenAPI/Swagger file, `curl` examples, response schemas, status codes,
+  an auth section — Casely now exports the API-level cases as a runnable Postman v2.1
+  collection alongside the Excel file. It says so in the Phase 3 plan first, so the existing
+  approval gate covers it and nobody receives an artefact they didn't ask for.
+- **`scripts/build_postman_collection.py`** — assembles per-case JSON request specs into the
+  collection, an environment file holding every variable, and a README covering import,
+  variables, the Collection Runner and a Newman command for CI. Assertions are generated from
+  each case's expected result rather than hand-written, so a typo cannot turn a broken
+  endpoint into a green run.
+- **Everything environment-specific becomes a variable.** `{{baseUrl}}`, `{{authToken}}`, entity
+  ids and test data land in the environment file with descriptions and empty values, secrets
+  typed as secrets. The value a case is actually testing stays literal — parameterizing
+  `amount: 50001` would hide what the case checks.
+- **The build refuses unsafe or unrunnable input**, the way the Excel exporter already did: a
+  hardcoded host, anything shaped like a JWT or a secret key, a duplicated case id, a missing
+  or invalid field. It names the file and exits non-zero rather than writing a collection that
+  points at production or carries someone's token.
+- **`references/api_collection.md`** — the signals that decide whether a collection is worth
+  building, the request spec format, request chaining, and the variable and assertion rules.
+- Evals extended with the plan-time offer, the no-endpoints case, and the variable rules.
+
+### Changed
+- Phase 5 is now "Export": Excel always, the Postman collection when the plan promised one.
+- Casely never guesses an endpoint from a described flow. A spec that names screens but no
+  paths gets a request for the API docs instead of a collection that 404s on first run.
+
+---
+
 ## [2.1.0] — 2026-09-04
 
 ### Fixed

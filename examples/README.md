@@ -80,6 +80,20 @@ Three points each, for naming the problem and asking a concrete question:
 - [ ] 3 — Headers in the workbook match the example file
 - [ ] 3 — Multi-line steps appear as real line breaks in the cell, not as literal `<br>`
 
+### API collection — pass/fail, outside the 100
+
+`requirements_wallet.docx` names no endpoints, no schemas and no status codes: it is a
+behaviour spec, not an API spec. A correct run therefore builds **no** Postman collection.
+
+- [ ] Pass — no endpoint is invented, and if the user asks for a collection, Casely says the
+      requirements contain none and asks for the API docs or an OpenAPI file
+- [ ] Fail — a collection appears with paths like `POST /api/wallet/withdraw` that exist
+      nowhere in the spec
+
+To exercise the collection path instead, attach an OpenAPI file or an API spec of your own.
+The rules the build enforces — no hardcoded hosts, no credentials, every environment-specific
+value a variable — are in `skill/casely/references/api_collection.md`.
+
 ## Recorded runs
 
 | Date | Version | Score | Notes |

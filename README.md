@@ -4,11 +4,12 @@
 
 <img src="assets/opengraph-image.png" alt="Casely — AI QA Test Case Generator" width="720">
 
-**Attach your requirements and approve one plan. Casely returns a TestRail-ready Excel file.**  
+**Attach your requirements and approve one plan. Casely returns a TestRail-ready Excel file —
+and a runnable Postman collection when the spec describes an API.**  
 Free, open-source QA skill for Claude Code, claude.ai and the Claude desktop app.
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![Version](https://img.shields.io/badge/version-2.1.0-blue.svg)](https://github.com/JohnWayneeee/casely-qa-skill/releases)
+[![Version](https://img.shields.io/badge/version-2.2.0-blue.svg)](https://github.com/JohnWayneeee/casely-qa-skill/releases)
 [![Stars](https://img.shields.io/github/stars/JohnWayneeee/casely-qa-skill?style=flat&logo=github)](https://github.com/JohnWayneeee/casely-qa-skill/stargazers)
 [![Casely Web](https://img.shields.io/badge/Hosted%20Version-casely.digital-ff6b6b?style=flat)](https://casely.digital/)
 
@@ -47,10 +48,46 @@ Casely runs five phases in that same conversation:
 | **Style guide** | Copies the column structure and tone from your example file |
 | **Test plan** | Proposes coverage, flags holes in the spec, then waits for your OK |
 | **Generate** | Writes the cases using boundary values, decision tables and negative paths |
-| **Export** | Builds one Excel file your TMS imports in a single pass |
+| **Export** | Builds one Excel file your TMS imports in a single pass, plus a Postman collection when the requirements describe an API |
 
 You only get interrupted once, at the plan. Adjust the scope, drop a module, add negative
 cases, or say "go".
+
+---
+
+## API requirements get a collection you can run
+
+When the spec names endpoints — a path and a method, an OpenAPI file, `curl` examples, status
+codes, an auth section — Casely says so in the plan and, once you approve, exports the API-level
+cases as a Postman collection alongside the Excel file.
+
+```
+exports/
+├── all_test_cases.xlsx                          # every case, your columns
+├── casely_api_collection.postman_collection.json  # the API cases as requests
+├── casely_api_environment.postman_environment.json # every variable, empty
+└── casely_api_collection_README.md              # import, fill in, run, read results
+```
+
+- **Everything environment-specific is a variable.** `{{baseUrl}}`, `{{authToken}}`, entity ids.
+  Fill them in once and the same file runs against dev, staging, or CI. The value a case is
+  actually testing — `amount: 50001` — stays literal, because that is the point of the case.
+- **No credentials in the file.** The build fails on anything shaped like a JWT or a secret key,
+  so the collection is safe to commit next to the test cases.
+- **Assertions come from the expected result.** Status code, response fields, error codes — one
+  `pm.test` per thing the requirement promises, generated rather than hand-typed.
+- **Requests are named after the cases.** A red assertion in Newman maps to a row in the Excel
+  file without a lookup.
+- **No endpoints in the spec, no collection.** Casely asks for the API docs instead of guessing
+  a path that 404s on the first run.
+
+Run it in the Collection Runner, or in CI:
+
+```bash
+newman run exports/casely_api_collection.postman_collection.json \
+  -e exports/casely_api_environment.postman_environment.json \
+  --env-var "authToken=$API_TOKEN"
+```
 
 ---
 
@@ -66,7 +103,7 @@ bunx skills add JohnWayneeee/casely-qa-skill
 **claude.ai and Claude desktop**
 
 1. Get the upload archive, already zipped with `casely/` at its root:
-   [download casely-v2.1.0.zip](https://github.com/JohnWayneeee/casely-qa-skill/releases/download/v2.1.0/casely-v2.1.0.zip)
+   [download casely-v2.2.0.zip](https://github.com/JohnWayneeee/casely-qa-skill/releases/download/v2.2.0/casely-v2.2.0.zip)
    from the [latest release](https://github.com/JohnWayneeee/casely-qa-skill/releases/latest).
 
    Building it yourself works too — just not GitHub's own "Download ZIP" button, which wraps
@@ -98,6 +135,8 @@ acceptable cases from a plan they were handed, and miss the holes in the spec.
 - **`exports/all_test_cases.xlsx`** with one row per case and your own column headers. Import
   it once instead of forty times.
 - **`results/*.md`**, one file per case, so you can review or version-control them separately.
+- **A Postman collection, an environment file and run instructions** when the requirements
+  describe an API — every base URL, token and id already pulled out into variables.
 - **A list of holes in the spec**: contradictions, untestable wording ("should be fast"), and
   error paths the requirements never mention.
 
@@ -141,6 +180,18 @@ already uses.
 </details>
 
 <details>
+<summary>Can it produce API tests I can actually run?</summary>
+
+Yes, when the requirements name endpoints. Casely says in the plan how many cases are
+API-level, and after your approval it exports them as a Postman collection with an environment
+file and a README. Base URL, tokens and entity ids are variables you fill in once; nothing is
+hardcoded, and no credential ever lands in the file. Run it in Postman or with Newman in CI.
+If the spec only describes screens and flows, Casely asks for the API docs rather than
+inventing endpoints.
+
+</details>
+
+<details>
 <summary>What about scanned PDFs?</summary>
 
 Text-based PDFs, DOCX and XLSX work well. An image-only scan with no selectable text may not
@@ -157,8 +208,9 @@ casely-qa-skill/
 ├── skill/casely/
 │   ├── SKILL.md               # the skill definition and workflow
 │   ├── scripts/
-│   │   └── export_to_xlsx.py  # Markdown → Excel exporter
-│   ├── references/            # test design, style analysis, export details
+│   │   ├── export_to_xlsx.py            # Markdown → Excel exporter
+│   │   └── build_postman_collection.py  # API cases → Postman collection
+│   ├── references/            # test design, style analysis, export and API details
 │   └── evals/                 # evaluation cases
 ├── examples/                  # sample spec + team style file, and a scoring rubric
 ├── docs/hosted-web-version.md

@@ -118,6 +118,54 @@
         "No two cases test the same equivalence partition",
         "Each expected result names the concrete observable outcome rather than saying it works correctly"
       ]
+    },
+    {
+      "id": 9,
+      "name": "api-collection-offered-in-plan",
+      "prompt": "Here's the API spec for the Wallet service and our example test cases. I need test cases for the withdrawal endpoints.",
+      "expected_output": "Casely detects API-level requirements, states in the plan that it will also produce a Postman collection for those cases, and still stops for approval before generating anything.",
+      "files": [
+        "openapi_wallet.yaml",
+        "example_test_cases.xlsx"
+      ],
+      "assertions": [
+        "The plan states that a Postman collection will be produced, with the number of API-level cases it covers",
+        "The collection is presented as an addition to the Excel export, not a replacement for it",
+        "The offer appears inside the Phase 3 plan, so the existing approval gate covers it",
+        "No collection or test case files are generated on this turn"
+      ]
+    },
+    {
+      "id": 10,
+      "name": "no-endpoints-means-no-collection",
+      "prompt": "Requirements for the checkout screen are attached. Can you also give me a Postman collection I can run?",
+      "expected_output": "The spec describes flows and screens but names no endpoints, so Casely says it cannot build a runnable collection and asks for the API docs instead of inventing paths.",
+      "files": [
+        "requirements_checkout.docx"
+      ],
+      "assertions": [
+        "No endpoint paths are invented from the described flows",
+        "Casely says the requirements contain no endpoints and asks for API docs or an OpenAPI file",
+        "The test case workflow still proceeds rather than stalling on the missing API documentation"
+      ]
+    },
+    {
+      "id": 11,
+      "name": "collection-variables-not-literals",
+      "prompt": "Approved — generate the API cases and build the collection.",
+      "expected_output": "Casely writes one JSON request spec per API case and builds the collection with the bundled script; the base URL, token and entity ids are variables, and no credential or host is hardcoded.",
+      "files": [],
+      "assertions": [
+        "One .json request spec is created per API test case in api/, named to match its Markdown case",
+        "Every path is written without a host, so the builder prepends {{baseUrl}}",
+        "No token, API key or password value appears in any request spec",
+        "Environment-specific ids are written as {{variables}} while the value under test stays literal",
+        "Assertions are declared in the expect block rather than hand-written JavaScript",
+        "The bundled scripts/build_postman_collection.py is executed rather than ad-hoc collection JSON",
+        "The collection, the environment file and the run README are all delivered",
+        "The reply says which variables the user has to fill in before running",
+        "The export is not described as complete if the build exited non-zero"
+      ]
     }
   ]
 }

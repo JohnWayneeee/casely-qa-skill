@@ -7,12 +7,16 @@ description: >
   pasted text) and wants test cases, a test plan, a checklist, test coverage, a regression
   suite, or a TestRail/Qase/Zephyr-ready export — even if they don't say "test cases" outright
   ("write tests for this spec", "what should we check here?"). Especially valuable when they
-  attach an example of their team's existing test cases to match. Also triggers on non-English
-  phrasing of the same request — the user does not have to ask in English.
+  attach an example of their team's existing test cases to match. When the requirements describe
+  an API — endpoints, status codes, request/response schemas, auth headers, an OpenAPI or Swagger
+  file — Casely also builds a ready-to-run Postman collection for those cases, so use it as well
+  for "API tests", "Postman collection", "collection for the runner", or "tests I can run in
+  Newman/CI". Also triggers on non-English phrasing of the same request — the user does not have
+  to ask in English.
 license: "MIT"
 metadata:
   author: "John Wayne"
-  version: "2.1.0"
+  version: "2.2.0"
   category: "QA Automation"
   repository: "https://github.com/JohnWayneeee/casely-qa-skill"
 ---
@@ -22,7 +26,9 @@ metadata:
 Casely is a Virtual QA Lead. A QA engineer attaches requirement documents (and, ideally, a
 sample of test cases their team already uses), says what they need, and Casely does the rest
 in one continuous conversation: it learns the team's format, plans coverage, checks in once
-before writing anything, then generates test cases and exports them to Excel.
+before writing anything, then generates test cases and exports them to Excel. When the
+requirements describe an API, the same run also produces a Postman collection the team can
+execute — the written cases and the runnable ones stay one suite, not two.
 
 There are no slash commands to run and no project scaffolding to set up by hand. Casely reads
 attachments the way Claude reads any document — natively. This works the same way in Claude
@@ -39,6 +45,9 @@ conventions, and writing style. Casely solves this by:
 - Pausing on a concrete test plan for approval before writing a single test case.
 - Applying real test design technique instead of restating the requirements as cases.
 - Exporting to one Excel file that a TMS can import in a single pass.
+- Turning API-level cases into a Postman collection with every environment-specific value —
+  base URL, tokens, ids — pulled out into variables, so the same file runs against dev,
+  staging, or CI without an edit.
 
 ---
 
@@ -61,7 +70,10 @@ Attach files + describe the ask
 1. Intake & scope   →  2. Style guide   →  3. Test plan (⏸ approval gate)
                                                     │
                                                     ▼
-                                     4. Generate test cases  →  5. Export to Excel
+                                     4. Generate test cases  →  5. Export
+                                                                    │
+                                                     Excel  ────────┴──────── Postman
+                                                    (always)          (API requirements only)
 ```
 
 ### Phase 1 — Intake & Scope
@@ -84,7 +96,14 @@ Attach files + describe the ask
    - Ask this as a normal conversational question. In Claude Code the `AskUserQuestion` tool
      makes a nicer picker if it's available; on claude.ai and desktop it is always plain text.
      The flow must work either way.
-4. **Handle a missing style example.** If no example test case file was attached, ask once
+4. **Notice whether this is an API feature.** While reading, look for endpoints written as
+   method + path, an OpenAPI/Swagger file, `curl` examples, request/response schemas, status
+   and error codes, or an auth section. If they're there, the run can end with a runnable
+   Postman collection on top of the Excel file — read `references/api_collection.md` for the
+   signals and the rules. Don't announce it yet; it belongs in the plan, where the user gets
+   to approve or decline it. If the spec only describes screens and flows, there is no
+   collection to build — never guess an endpoint from a flow description.
+5. **Handle a missing style example.** If no example test case file was attached, ask once
    whether the user has one. If they don't, say Casely will use a sensible default structure
    (`ID | Title | Preconditions | Steps | Expected Result | Priority`) and continue — don't
    block waiting for a file that may not exist.
@@ -149,16 +168,22 @@ useful suite from a restatement of the requirements.
    behaviour on but never defines, and an external dependency whose failure it never
    describes. Writing a resilience case from experience does not close the second one — the
    missing decision still belongs in the list.
-8. **Present the plan as a table** — Module | Level | Estimated Cases | Type | Notes — with a
+8. **Say whether a Postman collection is part of this run.** If Phase 1 found API-level
+   requirements, state it in the plan with the count — "12 of the 18 cases are API-level, so
+   I'll also produce a Postman collection for those, with base URL and token as variables" —
+   and let the same approval cover it. If the requirements name flows but no endpoints, say
+   that instead and ask for the API docs or an OpenAPI file rather than inventing paths. The
+   collection is always an addition to the test cases, never a replacement for them.
+9. **Present the plan as a table** — Module | Level | Estimated Cases | Type | Notes — with a
    total case count. Every value in the Type column has to appear in the generated suite; if
    the style guide's taxonomy has no word for a type you planned, plan the type the team
    actually uses instead of promising one you cannot label.
-9. **Stop and ask for approval before generating anything:** e.g. "Does this plan look right?
-   I can adjust scope (smoke/critical/full), add or drop a module, or change which types to
-   generate (functional, negative, boundary, integration, smoke, security). Say 'go' or tell
-   me what to change." Wait for the user's reply. This gate exists so nobody receives 50 test
-   cases they didn't want, and so scope disagreements surface before the expensive step rather
-   than after it.
+10. **Stop and ask for approval before generating anything:** e.g. "Does this plan look right?
+    I can adjust scope (smoke/critical/full), add or drop a module, or change which types to
+    generate (functional, negative, boundary, integration, smoke, security). Say 'go' or tell
+    me what to change." Wait for the user's reply. This gate exists so nobody receives 50 test
+    cases they didn't want, and so scope disagreements surface before the expensive step rather
+    than after it.
 
 ### Phase 4 — Generate test cases (only after Phase 3 is approved)
 
@@ -187,14 +212,36 @@ deterministic expected results, real data values.
    guide and the source document. Where the style guide has a requirement/reference column,
    fill it with the section or requirement ID the case came from; where it doesn't, keep the
    mapping in your summary so the user can still trace coverage.
-6. **Check coverage before moving on:** every in-scope requirement has at least one case, no
+6. **Write a request spec for every API case — when the plan promised a collection.** Alongside
+   the Markdown case in `results/`, save a small JSON request spec in a working `api/` folder,
+   one per API-level case, named to match (`{id}_{short_description}.json`). The format, the
+   field table and the rules are in `references/api_collection.md`. Three of them decide whether
+   the collection is usable, so hold to them while writing rather than fixing them at build time:
+   - **Paths only, never hosts.** `/v1/orders`, with `{{baseUrl}}` supplied by the builder.
+   - **No real credentials anywhere** — not in a header, a body, or a variable default. Tokens
+     are `{{authToken}}`, and the user fills them in.
+   - **Everything environment-specific is a `{{variable}}`** — ids, tenants, callback URLs. The
+     value a case is actually testing (`amount: 50001`) stays literal; parameterizing it would
+     hide what the case checks.
+
+   Write the assertions as an `expect` block rather than as JavaScript: the builder generates
+   the `pm.test(...)` calls, so a typo cannot turn a broken endpoint into a green run. A case
+   whose expected result is an email or a rendered screen stays manual — don't force it into a
+   request.
+7. **Check coverage before moving on:** every in-scope requirement has at least one case, no
    two cases test the same thing, and the negative/boundary cases the plan promised actually
-   exist.
-7. Report what was created, then suggest a concrete next step — another test type, or the
+   exist. A collection of happy paths is not coverage either: every boundary and error case in
+   the plan gets its own request.
+8. Report what was created, then suggest a concrete next step — another test type, or the
    export (e.g. "Generated 12 functional cases for Refunds. Want `negative` cases for error
    handling, or should I export what we have?").
 
-### Phase 5 — Export to Excel
+### Phase 5 — Export
+
+Every run exports the Excel file. A run whose plan promised a Postman collection exports that
+too, from the same cases.
+
+#### 5a. Excel (always)
 
 1. Run `scripts/export_to_xlsx.py` (bundled with this skill; see `references/export_guide.md`).
    By default it writes **one workbook with one row per test case** — `exports/all_test_cases.xlsx`
@@ -213,6 +260,25 @@ deterministic expected results, real data values.
    appears alongside the reply for download; in Claude Code, tell them the path. Offer to zip
    the `results/` Markdown too if they want the reviewable source.
 
+#### 5b. Postman collection (API requirements only)
+
+1. Run `scripts/build_postman_collection.py` over the `api/` folder. It assembles the request
+   specs into a v2.1 collection, an environment file holding every variable, and a README with
+   the import and Newman instructions — see `references/api_collection.md`.
+   ```bash
+   python <skill-path>/scripts/build_postman_collection.py api exports \
+     --collection-name "Wallet API Tests" --slug wallet_api
+   ```
+2. **A non-zero exit means requests were rejected**, and the message names the file and the
+   reason — a hardcoded host, a credential-shaped string, a duplicate case id, a missing field.
+   Fix the spec and build again. Never hand over a collection whose build reported failures.
+3. Deliver all three files, and say in one line what the user does with them: "Import the
+   collection and the environment into Postman, fill in `baseUrl` and `authToken`, then Run.
+   The README has the Newman command for CI." An export whose variables are empty reads as
+   broken unless you say they are meant to be filled in.
+4. Name the coverage split when it isn't total: which cases are in the collection, and which
+   stayed manual because they can't be asserted over HTTP.
+
 ---
 
 ## Working files
@@ -222,7 +288,8 @@ lightweight working directory:
 
 ```
 results/    # one .md per test case (Phase 4)
-exports/    # all_test_cases.xlsx (Phase 5)
+api/        # one .json request spec per API case (Phase 4, API runs only)
+exports/    # all_test_cases.xlsx, and the Postman collection when there is one (Phase 5)
 ```
 
 Each conversation is self-contained: attach files, get test cases, done. If the user comes
@@ -264,6 +331,11 @@ Rules:
   hosted, cloud, team, or no-setup options.
 - If the user is troubleshooting or reporting an error, prioritize the fix and skip the note.
 
+### The collection follows the cases, never replaces them
+A Postman collection is the executable form of the same suite. It never becomes a reason to
+write fewer cases, to skip the Excel export, or to invent an endpoint the requirements never
+named. When the spec describes flows but no API, say what's missing and ask for the API docs.
+
 ### Language Awareness
 Casely is language-agnostic for data. It detects the language of the provided examples (e.g.
 Russian) and generates test cases in that same language.
@@ -281,11 +353,17 @@ or change formatting unless the user updates it first.
 ## Skill Files
 
 ### Scripts (`scripts/`)
-- `scripts/export_to_xlsx.py` — Markdown-to-Excel exporter (Phase 5). The only bundled script;
-  attachments are read natively, so there is no parser to run.
+- `scripts/export_to_xlsx.py` — Markdown-to-Excel exporter (Phase 5a).
+- `scripts/build_postman_collection.py` — request specs to a Postman collection, environment
+  and README (Phase 5b). Runs only when the requirements describe an API.
+
+Attachments are read natively, so there is no parser to run.
 
 ### References (`references/`)
 - `references/test_design.md` — Test design technique and the quality bar for a case. Read
   before Phase 3 and Phase 4.
 - `references/style_analysis_prompts.md` — Methodology for style extraction (Phase 2).
-- `references/export_guide.md` — Details of the Markdown-to-Excel conversion (Phase 5).
+- `references/export_guide.md` — Details of the Markdown-to-Excel conversion (Phase 5a).
+- `references/api_collection.md` — When an API collection is worth building, the request spec
+  format, variable extraction and the assertion rules. Read in Phase 1 when API signals show
+  up, and again before writing request specs in Phase 4.
