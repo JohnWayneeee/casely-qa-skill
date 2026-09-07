@@ -1,0 +1,171 @@
+{
+  "skill_name": "casely",
+  "evals": [
+    {
+      "id": 1,
+      "name": "plan-gate-before-generating",
+      "prompt": "Here are the requirements for the Payments module and a couple of example test cases my team already writes. Give me test cases for the refund flow.",
+      "expected_output": "Casely reads both attachments directly, clones the example's column structure, scopes to the refund flow, presents a test plan with module breakdown and estimated case count, and stops for approval instead of generating cases.",
+      "files": [
+        "requirements_payments.pdf",
+        "example_test_cases.xlsx"
+      ],
+      "assertions": [
+        "No test case files are generated on this turn",
+        "A test plan is presented containing module breakdown and an estimated case count",
+        "The reply ends by asking the user to approve or adjust the plan",
+        "The column structure described matches the example file exactly, in the same order",
+        "Scope is limited to the refund flow rather than the whole Payments module"
+      ]
+    },
+    {
+      "id": 2,
+      "name": "generate-after-approval",
+      "prompt": "That plan looks good, go ahead.",
+      "expected_output": "Casely treats this as approval and generates one Markdown file per test case, each a single-row table matching the style guide, with IDs continuing the team's scheme.",
+      "files": [],
+      "assertions": [
+        "One .md file is created per test case in results/",
+        "Each file contains exactly one header row, one separator row and one data row",
+        "Line breaks inside cells are written as <br>, never as real newlines",
+        "Any literal pipe character in cell text is escaped as \\|",
+        "Case IDs continue the numbering scheme found in the example file",
+        "The number of generated cases matches the approved plan"
+      ]
+    },
+    {
+      "id": 3,
+      "name": "plan-revision-does-not-generate",
+      "prompt": "Actually only cover the smoke tier, and add negative cases too.",
+      "expected_output": "Casely revises the plan to smoke tier plus negative cases, presents it, and waits for approval again without generating anything.",
+      "files": [],
+      "assertions": [
+        "No test case files are generated on this turn",
+        "An updated plan reflecting smoke tier and negative cases is presented",
+        "Approval is requested again before generation"
+      ]
+    },
+    {
+      "id": 4,
+      "name": "combined-excel-export",
+      "prompt": "Export everything to Excel for TestRail.",
+      "expected_output": "Casely runs the bundled export script, producing a single workbook with one row per test case, and reports where it is.",
+      "files": [],
+      "assertions": [
+        "The bundled scripts/export_to_xlsx.py is executed rather than ad-hoc export code",
+        "Exactly one .xlsx file is produced, containing one row per test case",
+        "Column headers in the workbook match the style guide exactly",
+        "Multi-line cell content appears as real line breaks inside the cell, not as literal <br>",
+        "The export is not described as complete if the script exited non-zero"
+      ]
+    },
+    {
+      "id": 5,
+      "name": "missing-style-example",
+      "prompt": "I only have requirements, no example test cases to show you.",
+      "expected_output": "Casely asks once for an example, then proceeds with a default column structure rather than blocking.",
+      "files": [
+        "requirements_only.docx"
+      ],
+      "assertions": [
+        "Casely asks at most once whether an example test case file exists",
+        "The workflow continues with a default structure if the user has no example",
+        "The default structure includes ID, Title, Preconditions, Steps, Expected Result and Priority"
+      ]
+    },
+    {
+      "id": 6,
+      "name": "ambiguous-scope-asks-which-module",
+      "prompt": "Here's our full requirements doc covering Auth, Payments, and Profile — write me some test cases.",
+      "expected_output": "Casely lists the detected modules and asks which to cover instead of silently generating for all three.",
+      "files": [
+        "requirements_full.pdf"
+      ],
+      "assertions": [
+        "The detected modules are listed back to the user",
+        "Casely asks which module(s) to cover before planning",
+        "No test cases are generated before scope is resolved"
+      ]
+    },
+    {
+      "id": 7,
+      "name": "reports-requirement-gaps",
+      "prompt": "Requirements attached for the withdrawal feature. Plan the test coverage. Note the spec says withdrawals should be 'processed quickly' and gives a limit of 50000 in one section but shows a successful 75000 withdrawal in an example.",
+      "expected_output": "Alongside the plan, Casely reports the untestable 'processed quickly' wording and the contradiction between the stated limit and the example.",
+      "files": [
+        "requirements_withdrawal.pdf"
+      ],
+      "assertions": [
+        "The vague 'processed quickly' requirement is flagged as untestable with a request for a concrete threshold",
+        "The contradiction between the 50000 limit and the 75000 example is flagged",
+        "Gaps are reported as a distinct list with section references, separate from the plan table",
+        "The plan is still delivered rather than withheld pending answers",
+        "A status the spec gates behaviour on but never defines is flagged, with a question about how a tester puts an account into it",
+        "An external dependency whose failure behaviour the spec omits is flagged as a gap, not silently covered by a resilience case",
+        "Contradictions between a stated limit and a worked example appear in the plan, not after generation"
+      ]
+    },
+    {
+      "id": 8,
+      "name": "applies-boundary-and-negative-technique",
+      "prompt": "The amount field accepts 1 to 100000 rubles, integers only. Generate the test cases for it.",
+      "expected_output": "Cases cover boundary values on both sides of each edge plus invalid-type and empty input, rather than several happy-path variations.",
+      "files": [],
+      "assertions": [
+        "Boundary values 0, 1, 100000 and 100001 each have a case",
+        "Non-integer and non-numeric input are covered",
+        "Empty input is covered",
+        "No two cases test the same equivalence partition",
+        "Each expected result names the concrete observable outcome rather than saying it works correctly"
+      ]
+    },
+    {
+      "id": 9,
+      "name": "api-collection-offered-in-plan",
+      "prompt": "Here's the API spec for the Wallet service and our example test cases. I need test cases for the withdrawal endpoints.",
+      "expected_output": "Casely detects API-level requirements, states in the plan that it will also produce a Postman collection for those cases, and still stops for approval before generating anything.",
+      "files": [
+        "openapi_wallet.yaml",
+        "example_test_cases.xlsx"
+      ],
+      "assertions": [
+        "The plan states that a Postman collection will be produced, with the number of API-level cases it covers",
+        "The collection is presented as an addition to the Excel export, not a replacement for it",
+        "The offer appears inside the Phase 3 plan, so the existing approval gate covers it",
+        "No collection or test case files are generated on this turn"
+      ]
+    },
+    {
+      "id": 10,
+      "name": "no-endpoints-means-no-collection",
+      "prompt": "Requirements for the checkout screen are attached. Can you also give me a Postman collection I can run?",
+      "expected_output": "The spec describes flows and screens but names no endpoints, so Casely says it cannot build a runnable collection and asks for the API docs instead of inventing paths.",
+      "files": [
+        "requirements_checkout.docx"
+      ],
+      "assertions": [
+        "No endpoint paths are invented from the described flows",
+        "Casely says the requirements contain no endpoints and asks for API docs or an OpenAPI file",
+        "The test case workflow still proceeds rather than stalling on the missing API documentation"
+      ]
+    },
+    {
+      "id": 11,
+      "name": "collection-variables-not-literals",
+      "prompt": "Approved — generate the API cases and build the collection.",
+      "expected_output": "Casely writes one JSON request spec per API case and builds the collection with the bundled script; the base URL, token and entity ids are variables, and no credential or host is hardcoded.",
+      "files": [],
+      "assertions": [
+        "One .json request spec is created per API test case in api/, named to match its Markdown case",
+        "Every path is written without a host, so the builder prepends {{baseUrl}}",
+        "No token, API key or password value appears in any request spec",
+        "Environment-specific ids are written as {{variables}} while the value under test stays literal",
+        "Assertions are declared in the expect block rather than hand-written JavaScript",
+        "The bundled scripts/build_postman_collection.py is executed rather than ad-hoc collection JSON",
+        "The collection, the environment file and the run README are all delivered",
+        "The reply says which variables the user has to fill in before running",
+        "The export is not described as complete if the build exited non-zero"
+      ]
+    }
+  ]
+}

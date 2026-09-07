@@ -1,0 +1,28 @@
+{
+  "name": "casely",
+  "owner": {
+    "name": "John Wayne",
+    "github": "JohnWayneeee"
+  },
+  "metadata": {
+    "description": "Attach requirements + example test cases, approve the plan, get one TestRail-ready Excel back — plus a runnable Postman collection when the spec describes an API. One conversation, no commands.",
+    "version": "2.2.0",
+    "category": "QA Automation, QA manual",
+    "tags": ["qa", "testing", "testrail", "test-cases", "automation", "requirements", "pdf", "excel", "qase", "istqb", "api-testing", "postman", "newman"],
+    "icon": "https://raw.githubusercontent.com/JohnWayneeee/casely-qa-skill/main/assets/logo.png",
+    "homepage": "https://casely.digital/",
+    "repository": "https://github.com/JohnWayneeee/casely-qa-skill",
+    "license": "MIT"
+  },
+  "plugins": [
+    {
+      "name": "casely",
+      "description": "Virtual QA Lead: attach requirements + examples, approve the plan, get atomic test cases, a TestRail-ready Excel export and a Postman collection for API tests",
+      "source": "./",
+      "strict": false,
+      "skills": [
+        "skill/casely"
+      ]
+    }
+  ]
+}
