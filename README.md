@@ -15,12 +15,11 @@ A list of gaps, contradictions, and untestable requirements.
 Built for QA engineers who want to spend less time formatting test cases and more time finding bugs.
 
 **If Casely looks useful, star the repo. It helps more QA engineers find it.**  
-<a href="https://github.com/JohnWayneeee/casely-qa-skill"><img src="https://img.shields.io/badge/Star%20Casely%20on%20GitHub-181717?style=for-the-badge&logo=github&logoColor=white" alt="Star Casely on GitHub"></a>
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Version](https://img.shields.io/badge/version-2.2.0-blue.svg)](https://github.com/JohnWayneeee/casely-qa-skill/releases)
 [![Stars](https://img.shields.io/github/stars/JohnWayneeee/casely-qa-skill?style=flat&logo=github)](https://github.com/JohnWayneeee/casely-qa-skill)
-[![Web app](https://img.shields.io/badge/Web%20app-casely.digital-ff6b6b?style=flat)](https://casely.digital/)
+[![Web](https://img.shields.io/badge/Web%20-casely.digital-ff6b6b?style=flat)](https://casely.digital/)
 
 </div>
 ---
