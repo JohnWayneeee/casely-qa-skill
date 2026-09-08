@@ -4,35 +4,18 @@
 
 <img src="assets/opengraph-image.png" alt="Casely — AI QA Test Case Generator" width="720">
 
-<br>
-
 Turn requirements into TestRail-ready test cases in one conversation.
 
-<br>
-
 Attach a PDF, DOCX, or XLSX, approve one test plan, and Casely returns:
-
-<br>
 
 TestRail-ready Excel files using your team’s columns.<br>
 Runnable Postman collections for API specs.<br>
 A list of gaps, contradictions, and untestable requirements.
 
-<br>
-
 Built for QA engineers who want to spend less time formatting test cases and more time finding bugs.
 
-<br>
-
-**Star this repo if Casely saved you a work week.**
-
-<br>
-
-<a href="https://github.com/JohnWayneeee/casely-qa-skill">
-  <img src="https://img.shields.io/badge/Star%20Casely%20on%20GitHub-181717?style=for-the-badge&logo=github&logoColor=white" alt="Star Casely on GitHub">
-</a>
-
-<br><br>
+**If Casely looks useful, star the repo. It helps more QA engineers find it.**  
+<a href="https://github.com/JohnWayneeee/casely-qa-skill"><img src="https://img.shields.io/badge/Star%20Casely%20on%20GitHub-181717?style=for-the-badge&logo=github&logoColor=white" alt="Star Casely on GitHub"></a>
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Version](https://img.shields.io/badge/version-2.2.0-blue.svg)](https://github.com/JohnWayneeee/casely-qa-skill/releases)
@@ -40,7 +23,6 @@ Built for QA engineers who want to spend less time formatting test cases and mor
 [![Web app](https://img.shields.io/badge/Web%20app-casely.digital-ff6b6b?style=flat)](https://casely.digital/)
 
 </div>
-
 ---
 
 ## Watch it work
