@@ -38,7 +38,7 @@ Good feature requests explain the problem they solve, not just the implementatio
    ```
 
    For anything that touches the workflow, also run the end-to-end check in
-   [`examples/`](examples/README.md): attach the two fixture files in a fresh chat and score
+   [`benchmark/`](benchmark/README.md): attach the two fixture files in a fresh chat and score
    the run against the rubric. Report the score in your pull request, with the chat export
    and the workbook attached.
 

@@ -72,7 +72,7 @@ Versions follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 - Evals expanded to 8 cases with 34 formal assertions, covering the approval gate, the
   formatting contract, gap reporting and boundary technique.
 
-- **`examples/`** — a wallet spec with five planted defects, a team-style example file and a
+- **`benchmark/`** — a wallet spec with five planted defects, a team-style example file and a
   100-point rubric, so two runs of the skill can be compared on the same input.
 
 ### Removed

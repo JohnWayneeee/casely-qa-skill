@@ -219,7 +219,7 @@ casely-qa-skill/
 │   │   └── build_postman_collection.py  # API cases → Postman collection
 │   ├── references/            # test design, style analysis, export and API details
 │   └── evals/                 # evaluation cases
-├── examples/                  # sample spec + team style file, and a scoring rubric
+├── benchmark/                # sample spec + team style file, and a scoring rubric
 ├── docs/hosted-web-version.md
 └── marketplace.json
 ```
