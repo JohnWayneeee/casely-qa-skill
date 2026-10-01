@@ -33,8 +33,8 @@ Good feature requests explain the problem they solve, not just the implementatio
 3. Test your changes:
    ```bash
    # export changes: run the script against sample .md test cases
-   python skill/casely/scripts/export_to_xlsx.py results exports
-   # behaviour changes: add or update a case in skill/casely/evals/evals.json
+   python skills/casely/scripts/export_to_xlsx.py results exports
+   # behaviour changes: add or update a case in skills/casely/evals/evals.json
    ```
 
    For anything that touches the workflow, also run the end-to-end check in
@@ -57,7 +57,7 @@ Good feature requests explain the problem they solve, not just the implementatio
   execution environment — adding another means the skill stops working out of the box, so
   discuss it in an issue first. Casely reads documents natively instead of bundling a parser.
 - Markdown: use ATX headings (`##`), fenced code blocks with language tags.
-- Keep `SKILL.md`, `README.md`, and `skill/casely/evals/evals.json` in sync if you change
+- Keep `SKILL.md`, `README.md`, and `skills/casely/evals/evals.json` in sync if you change
   workflow phases or behavior.
 
 ## Commit message convention

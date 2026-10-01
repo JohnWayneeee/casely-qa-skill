@@ -7,6 +7,27 @@ Versions follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ---
 
+## [2.3.0] — Unreleased
+
+### Added
+- **Installable as a plugin in Claude Code and Codex.** The repository is now a plugin
+  marketplace: `.claude-plugin/plugin.json` describes the plugin and
+  `.claude-plugin/marketplace.json` lists it, so `claude plugin marketplace add
+  JohnWayneeee/casely-qa-skill` (or `codex plugin marketplace add …`) followed by
+  `… install casely@casely` installs it and `claude plugin update` keeps it current.
+  `npx skills add` keeps working as before.
+
+### Changed
+- **`skill/casely/` moved to `skills/casely/`**, the standard plugin layout that Claude Code,
+  claude.ai, Cowork and Codex all scan. Update local clones and any zip scripts that used the
+  old path.
+- **Skill description shortened to 801 characters.** It was 1,036, over the 1,024-character
+  limit in the Agent Skills specification. The triggers it lists are unchanged.
+- **`marketplace.json` moved from the repository root to `.claude-plugin/`**, where Claude Code
+  and Codex look for it. At the root it was never picked up.
+
+---
+
 ## [2.2.0] — 2026-09-06
 
 ### Added

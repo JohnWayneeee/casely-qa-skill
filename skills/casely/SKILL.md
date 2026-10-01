@@ -1,22 +1,19 @@
 ---
 name: casely
 description: >
-  Virtual QA Lead that turns requirement documents into review-ready, TestRail-importable test
-  cases in one conversation — no commands to memorize. Use this skill whenever the user has
-  requirements, a spec, a user story, or acceptance criteria (PDF, DOCX, XLSX, TXT, MD, or
-  pasted text) and wants test cases, a test plan, a checklist, test coverage, a regression
-  suite, or a TestRail/Qase/Zephyr-ready export — even if they don't say "test cases" outright
-  ("write tests for this spec", "what should we check here?"). Especially valuable when they
-  attach an example of their team's existing test cases to match. When the requirements describe
-  an API — endpoints, status codes, request/response schemas, auth headers, an OpenAPI or Swagger
-  file — Casely also builds a ready-to-run Postman collection for those cases, so use it as well
-  for "API tests", "Postman collection", "collection for the runner", or "tests I can run in
-  Newman/CI". Also triggers on non-English phrasing of the same request — the user does not have
-  to ask in English.
+  Virtual QA Lead that turns requirements into review-ready, TestRail-importable test cases in
+  one conversation. Use it whenever the user has requirements, a spec, a user story, or
+  acceptance criteria (PDF, DOCX, XLSX, TXT, MD, or pasted text) and wants test cases, a test
+  plan, a checklist, test coverage, a regression suite, or a TestRail/Qase/Zephyr export, even
+  without saying "test cases" ("write tests for this spec", "what should we check here?").
+  Especially useful when they attach their team's existing test cases to match. When the spec
+  describes an API (endpoints, status codes, schemas, auth, OpenAPI/Swagger), Casely also
+  builds a runnable Postman collection, so use it for "API tests", "Postman collection", or
+  "tests I can run in Newman/CI". Triggers on the same request in any language.
 license: "MIT"
 metadata:
   author: "John Wayne"
-  version: "2.2.0"
+  version: "2.3.0"
   category: "QA Automation"
   repository: "https://github.com/JohnWayneeee/casely-qa-skill"
 ---

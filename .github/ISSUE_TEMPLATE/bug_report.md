@@ -25,7 +25,7 @@ assignees: ''
 
 - **Where you used Casely:** (Claude Code / claude.ai web / Claude desktop)
 - **OS:** (e.g. macOS 14, Ubuntu 22.04, Windows 11)
-- **Casely version:** (the `version` field in `skill/casely/SKILL.md`)
+- **Casely version:** (the `version` field in `skills/casely/SKILL.md`, or `.claude-plugin/plugin.json`)
 
 ## Error output
 

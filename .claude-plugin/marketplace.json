@@ -1,0 +1,17 @@
+{
+  "name": "casely",
+  "description": "Casely, a virtual QA lead: requirements in, TestRail-ready test cases and a Postman collection out.",
+  "owner": {
+    "name": "John Wayne",
+    "url": "https://github.com/JohnWayneeee"
+  },
+  "plugins": [
+    {
+      "name": "casely",
+      "source": "./",
+      "description": "Attach requirements and an example of your team's test cases, approve one plan, get a TestRail-ready Excel file back, plus a runnable Postman collection when the spec describes an API.",
+      "category": "testing",
+      "tags": ["qa", "testing", "test-cases", "testrail", "qase", "zephyr", "xray", "requirements", "excel", "api-testing", "postman", "newman", "istqb"]
+    }
+  ]
+}
