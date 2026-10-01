@@ -642,7 +642,7 @@ creates an entity runs before the one that reads it.
 npm install -g newman
 newman run {collection_file} \\
   -e {environment_file} \\
-  --env-var "{AUTH_TOKEN_VAR}=$API_TOKEN" \\
+  --env-var "{AUTH_TOKEN_VAR}=<token from your CI secret store>" \\
   --reporters cli,junit --reporter-junit-export results.xml
 ```
 

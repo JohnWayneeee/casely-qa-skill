@@ -93,7 +93,7 @@ Run it in the Collection Runner, or in CI:
 ```bash
 newman run exports/casely_api_collection.postman_collection.json \
   -e exports/casely_api_environment.postman_environment.json \
-  --env-var "authToken=$API_TOKEN"
+  --env-var "authToken=<token from your CI secret store>"
 ```
 
 ---
