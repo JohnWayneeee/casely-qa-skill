@@ -92,7 +92,7 @@ behaviour spec, not an API spec. A correct run therefore builds **no** Postman c
 
 To exercise the collection path instead, attach an OpenAPI file or an API spec of your own.
 The rules the build enforces — no hardcoded hosts, no credentials, every environment-specific
-value a variable — are in `skill/casely/references/api_collection.md`.
+value a variable — are in `skills/casely/references/api_collection.md`.
 
 ## Recorded runs
 

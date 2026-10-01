@@ -17,7 +17,7 @@ Built for QA engineers who want to spend less time formatting test cases and mor
 **If Casely looks useful, star the repo. It helps more QA engineers find it.**  
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![Version](https://img.shields.io/badge/version-2.2.0-blue.svg)](https://github.com/JohnWayneeee/casely-qa-skill/releases)
+[![Version](https://img.shields.io/badge/version-2.3.0-blue.svg)](https://github.com/JohnWayneeee/casely-qa-skill/releases)
 [![Stars](https://img.shields.io/github/stars/JohnWayneeee/casely-qa-skill?style=flat&logo=github)](https://github.com/JohnWayneeee/casely-qa-skill)
 [![Web](https://img.shields.io/badge/Web%20-casely.digital-ff6b6b?style=flat)](https://casely.digital/)
 
@@ -102,23 +102,41 @@ newman run exports/casely_api_collection.postman_collection.json \
 
 **Claude Code**
 
+Install it as a plugin, which also gets you updates with `claude plugin update`:
+
+```bash
+claude plugin marketplace add JohnWayneeee/casely-qa-skill
+claude plugin install casely@casely
+```
+
+Or add just the skill to a project:
+
 ```bash
 bunx skills add JohnWayneeee/casely-qa-skill
 # or: npx skills@latest add JohnWayneeee/casely-qa-skill
 ```
 
+**Codex**
+
+Codex reads the same plugin manifest:
+
+```bash
+codex plugin marketplace add JohnWayneeee/casely-qa-skill
+codex plugin add casely@casely
+```
+
 **claude.ai and Claude desktop**
 
-1. Get the upload archive, already zipped with `casely/` at its root:
-   [download casely-v2.2.0.zip](https://github.com/JohnWayneeee/casely-qa-skill/releases/download/v2.2.0/casely-v2.2.0.zip)
-   from the [latest release](https://github.com/JohnWayneeee/casely-qa-skill/releases/latest).
+1. Get the upload archive, already zipped with `casely/` at its root: download
+   `casely-vX.Y.Z.zip` from the
+   [latest release](https://github.com/JohnWayneeee/casely-qa-skill/releases/latest).
 
    Building it yourself works too — just not GitHub's own "Download ZIP" button, which wraps
-   everything in `casely-qa-skill-main/skill/casely/` instead of putting `SKILL.md` at the
+   everything in `casely-qa-skill-main/skills/casely/` instead of putting `SKILL.md` at the
    archive root, which is what claude.ai requires:
    ```bash
    git clone https://github.com/JohnWayneeee/casely-qa-skill.git
-   cd casely-qa-skill/skill && zip -r casely.zip casely
+   cd casely-qa-skill/skills && zip -r casely.zip casely
    ```
 2. On claude.ai, open **Settings → Capabilities**, turn on **Code execution** if it isn't
    already, then go to **Skills → Create skill** and upload the zip.
@@ -212,7 +230,8 @@ extract cleanly, so export a text version when you can.
 
 ```
 casely-qa-skill/
-├── skill/casely/
+├── .claude-plugin/          # plugin + marketplace manifests (Claude Code, Codex)
+├── skills/casely/
 │   ├── SKILL.md               # the skill definition and workflow
 │   ├── scripts/
 │   │   ├── export_to_xlsx.py            # Markdown → Excel exporter
@@ -220,8 +239,7 @@ casely-qa-skill/
 │   ├── references/            # test design, style analysis, export and API details
 │   └── evals/                 # evaluation cases
 ├── benchmark/                # sample spec + team style file, and a scoring rubric
-├── docs/hosted-web-version.md
-└── marketplace.json
+└── docs/hosted-web-version.md
 ```
 
 ---
