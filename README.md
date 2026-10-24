@@ -273,3 +273,7 @@ Read [CONTRIBUTING.md](CONTRIBUTING.md) before opening a pull request.
 *Made for QA engineers who find bugs. Casely writes the documents.*
 
 </div>
+
+---
+
+<p align="center">☕ Casely saved you time? <a href="https://buymeacoffee.com/JohnWayne">Buy me a coffee</a> or star the repo.</p>
