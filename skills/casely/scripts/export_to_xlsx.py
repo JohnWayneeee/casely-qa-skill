@@ -10,6 +10,7 @@ silently loses its steps is worse than no export at all, so malformed input is
 reported and skipped rather than patched up.
 """
 
+import csv
 import re
 import sys
 import argparse
@@ -32,6 +33,9 @@ DEFAULT_RESULTS_DIR = "results"
 DEFAULT_OUTPUT_DIR = "exports"
 DEFAULT_COMBINED_NAME = "all_test_cases.xlsx"
 SHEET_TITLE = "Test Cases"
+# UTF-8 with a BOM: without it Excel opens the CSV in the system code page and
+# turns Arabic, Korean or Cyrillic into mojibake. TestRail reads either form.
+CSV_ENCODING = "utf-8-sig"
 
 
 class TableError(Exception):
@@ -134,6 +138,11 @@ def read_cases(results_path: Path) -> Tuple[List[Tuple[Path, List[str], List[Lis
     return cases, problems
 
 
+def cell_text(value: str) -> str:
+    """The text a tracker should receive for one Markdown cell."""
+    return value.replace('<br>', '\n').replace('<BR>', '\n') if value else ''
+
+
 def _write_sheet(ws: Worksheet, headers: List[str], rows: List[List[str]]) -> None:
     """Write one header row plus data rows, formatted for reading."""
     for col_idx, header in enumerate(headers, 1):
@@ -143,8 +152,7 @@ def _write_sheet(ws: Worksheet, headers: List[str], rows: List[List[str]]) -> No
 
     for row_idx, row in enumerate(rows, 2):
         for col_idx, value in enumerate(row, 1):
-            clean_value = value.replace('<br>', '\n').replace('<BR>', '\n') if value else ''
-            cell = ws.cell(row=row_idx, column=col_idx, value=clean_value)
+            cell = ws.cell(row=row_idx, column=col_idx, value=cell_text(value))
             cell.alignment = Alignment(wrap_text=True, vertical='top')
 
     for col_idx in range(1, len(headers) + 1):
@@ -193,6 +201,33 @@ def export_combined(
     return dest
 
 
+def export_csv(
+    cases: List[Tuple[Path, List[str], List[List[str]]]],
+    out_dir: Path,
+    file_name: str,
+) -> Path:
+    """Write every test case into one CSV, for trackers that import CSV only.
+
+    A CSV has one header row, so every case must share the same columns; the
+    Excel export can split mismatches across sheets, a CSV cannot.
+    """
+    headers = cases[0][1]
+    mismatched = [md_file.name for md_file, h, _ in cases if h != headers]
+    if mismatched:
+        raise TableError(
+            f"{', '.join(mismatched)} use different columns than {cases[0][0].name}; "
+            "a CSV holds one header row. Use the Excel export or align the columns."
+        )
+
+    dest = out_dir / file_name
+    with dest.open('w', encoding=CSV_ENCODING, newline='') as handle:
+        writer = csv.writer(handle, quoting=csv.QUOTE_MINIMAL)
+        writer.writerow(headers)
+        for _, _, rows in cases:
+            writer.writerows([cell_text(value) for value in row] for row in rows)
+    return dest
+
+
 def export_split(
     cases: List[Tuple[Path, List[str], List[List[str]]]],
     out_dir: Path,
@@ -231,6 +266,10 @@ def main() -> None:
         '--name', default=DEFAULT_COMBINED_NAME,
         help=f"Name of the combined workbook (default: '{DEFAULT_COMBINED_NAME}')",
     )
+    arg_parser.add_argument(
+        '--csv', action='store_true',
+        help='Also write the combined cases as a UTF-8 CSV next to the workbook',
+    )
     args = arg_parser.parse_args()
 
     results_path = Path(args.results_dir)
@@ -255,6 +294,12 @@ def main() -> None:
             dest = export_combined(cases, out_dir, args.name)
             total_rows = sum(len(rows) for _, _, rows in cases)
             print(f"Exported {total_rows} test cases to {dest}")
+        if args.csv:
+            try:
+                csv_dest = export_csv(cases, out_dir, Path(args.name).with_suffix('.csv').name)
+                print(f"Exported the same cases to {csv_dest}")
+            except TableError as exc:
+                problems.append(f"CSV: {exc}")
 
     if problems:
         print(f"\n{len(problems)} test case(s) were NOT exported:")

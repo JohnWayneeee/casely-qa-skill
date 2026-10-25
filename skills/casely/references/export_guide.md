@@ -9,7 +9,7 @@ case, because TestRail, Qase, Zephyr and Xray all import one file and map its co
 Separate files per case would mean repeating that import for every case.
 
 ```bash
-python <skill-path>/scripts/export_to_xlsx.py [results_dir] [output_dir] [--split] [--name FILE]
+python <skill-path>/scripts/export_to_xlsx.py [results_dir] [output_dir] [--split] [--name FILE] [--csv]
 ```
 
 - `results_dir` — where the `.md` test cases live (default: `results`)
@@ -17,6 +17,14 @@ python <skill-path>/scripts/export_to_xlsx.py [results_dir] [output_dir] [--spli
 - `--split` — write one Excel file per case instead of the combined workbook. Use only when
   the user wants per-case files for review or version control rather than import.
 - `--name` — rename the combined workbook (default: `all_test_cases.xlsx`)
+- `--csv` — also write the combined cases as `all_test_cases.csv`: UTF-8 with a BOM (Excel
+  otherwise opens it in the system code page and garbles non-Latin text), standard quoting for
+  commas, quotes and line breaks. Refused when cases carry different columns, since a CSV has
+  one header row.
+
+`tests/test_export_roundtrip.py` guards both paths: it exports Arabic and Korean fixtures with
+commas, quotes, an escaped pipe and line breaks, reads the XLSX and CSV back, and compares every
+cell, the row count and the column count with the untouched fixtures.
 
 Only `openpyxl` is required, and it is already present in Claude's code execution environment.
 
