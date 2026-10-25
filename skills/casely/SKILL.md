@@ -27,7 +27,8 @@ before writing anything, then generates test cases and exports them to Excel. Wh
 requirements describe an API, the same run also produces a Postman collection the team can
 execute — the written cases and the runnable ones stay one suite, not two.
 
-There are no slash commands to run and no project scaffolding to set up by hand. Casely reads
+No command is needed and there is no project scaffolding to set up by hand (the one optional
+command, `/casely:run`, walks finished cases in a browser). Casely reads
 attachments the way Claude reads any document — natively. This works the same way in Claude
 Code, claude.ai (web), and the Claude desktop app.
 
