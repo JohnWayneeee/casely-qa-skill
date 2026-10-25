@@ -14,7 +14,7 @@ A list of gaps, contradictions, and untestable requirements.
 
 **For you if** you are a manual QA engineer or QA lead who writes test cases from specs and imports them into TestRail, Qase, Zephyr or Xray.
 
-<a href="#install"><img src="https://img.shields.io/badge/Install_in_one_command-→-ff6b6b?style=for-the-badge" alt="Install in one command"></a>
+<a href="#install"><img src="https://img.shields.io/badge/Install_from_the_Claude_directory-→-ff6b6b?style=for-the-badge" alt="Install from the Claude plugin directory"></a>
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Version](https://img.shields.io/badge/version-2.4.0-blue.svg)](https://github.com/JohnWayneeee/casely-qa-skill/releases)
