@@ -24,6 +24,13 @@ Versions follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
   commas, quotes, an escaped pipe and line breaks go through the XLSX and CSV exports; the test
   reads both back and compares every cell, the row count and the column count with the untouched
   fixtures. Suggested in a dev.to comment thread; Arabic coverage follows feedback in #9.
+- **`/casely:bug`** (Claude Code; on claude.ai and Cowork, ask for a bug report). Writes one bug
+  report in the team's format from a trace or event ID, a monitoring link, pasted logs, or a failed
+  case from `/casely:run`. Reads the event through any connected monitoring MCP server (GlitchTip,
+  Sentry, the company's own) with read tools only, or from pasted logs when the tester has no access.
+  Masks tokens, emails, phone numbers, user ids and IPs; keeps the trace ID and link; writes `unknown`
+  instead of guessing; checks Jira for likely duplicates when connected; never files the bug. The
+  team's bug report examples are saved once as `bug-style.md`.
 - **Saved team style.** After the first run Casely offers to save the style it learned as
   `casely-style.md` (`.casely/style.md` in Claude Code): headers in order, ID scheme and the last
   ID used, tone, and one example row with real data replaced by placeholders. Later runs read it

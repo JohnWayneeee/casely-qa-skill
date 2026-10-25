@@ -77,6 +77,7 @@ cases, or say "go".
 | Reads a Jira issue or Confluence page | ➖ you copy-paste it | ✅ Atlassian connector |
 | Arabic, Korean and other non-Latin text survive the export | ➖ unchecked | ✅ round-trip tested |
 | Walks the cases in a browser and reports pass/fail | ❌ | ✅ `/casely:run` in Claude Code |
+| Bug report from a trace ID in your team's format, data masked | ➖ you paste and redact logs | ✅ `/casely:bug` |
 | Price | your AI plan | your AI plan, Casely itself is free (MIT) |
 
 ## Tested against a benchmark
@@ -121,6 +122,18 @@ Project knowledge.
 Casely walks each UI case through the Playwright MCP server, records pass, fail or blocked, saves a screenshot for
 every failure and writes `run/run_report.md`. Connect Playwright once:
 `claude mcp add playwright -- npx @playwright/mcp@latest`. API cases stay with Newman.
+
+**Bug reports from a trace ID.** In Claude Code:
+
+```
+/casely:bug 4f2a9c1e
+```
+
+Casely reads the event through your monitoring MCP server (GlitchTip, Sentry, or your company's own), or from logs
+you paste when you have no access, and writes one bug report in your team's fields: title, steps, expected and
+actual result, environment, trace link, a short log excerpt. Tokens, emails, user ids and IPs are masked. A failed
+case from `/casely:run` works too: `/casely:bug WD-014`. Attach your team's bug examples once and Casely saves the
+format. It never files the bug or touches the event: you file it. On claude.ai and Cowork, just ask for a bug report.
 
 **CSV for trackers that want it.** Ask for CSV and the export adds `all_test_cases.csv`, UTF-8 with a BOM, so Excel
 and TestRail keep non-Latin text intact.
@@ -325,6 +338,7 @@ casely-qa-skill/
 ├── .claude-plugin/          # plugin + marketplace manifests (Claude Code, Codex)
 ├── .mcp.json                # Atlassian remote MCP (Jira, Confluence), OAuth sign-in
 ├── commands/run.md          # /casely:run, walks the cases in a browser via Playwright MCP
+├── commands/bug.md          # /casely:bug, bug report from a trace ID, logs or a failed case
 ├── tests/                   # export round-trip test (Arabic, Korean, CSV, XLSX)
 ├── skills/casely/
 │   ├── SKILL.md               # the skill definition and workflow

@@ -232,6 +232,34 @@
         "Casely says in one line why it will not write to Jira and offers the export for import",
         "Casely offers the issue key as the requirement reference column"
       ]
+    },
+    {
+      "id": 17,
+      "name": "bug-report-from-trace-id",
+      "prompt": "Write a bug report for trace 4f2a9c1e from GlitchTip. Use our format from the attached examples.",
+      "expected_output": "Casely fetches the event through a read-only monitoring tool when one is connected, or asks for the pasted event when not, and writes one bug report in the team's fields with personal data masked.",
+      "files": [],
+      "assertions": [
+        "The report uses the field names and order of the attached examples",
+        "Casely calls no tool that resolves, assigns, comments on or deletes the event",
+        "Without a monitoring tool, Casely asks for the event JSON or log lines and never for an API token",
+        "Tokens, emails, user ids and IP addresses from the evidence are replaced by placeholders; the trace ID stays",
+        "Fields the evidence does not support say unknown instead of a guess",
+        "Casely does not create the issue in a tracker"
+      ]
+    },
+    {
+      "id": 18,
+      "name": "bug-report-from-failed-run-case",
+      "prompt": "/casely:bug WD-014",
+      "expected_output": "Casely reads WD-014 from run/run_report.md and writes the bug from the case steps, the expected result and what the page showed, with the screenshot path as evidence.",
+      "files": [],
+      "assertions": [
+        "Steps and expected result come from the WD-014 test case",
+        "Actual result matches what run_report.md recorded",
+        "Evidence names run/screenshots/WD-014.png",
+        "The report is saved under bugs/ and shown in the chat"
+      ]
     }
   ]
 }

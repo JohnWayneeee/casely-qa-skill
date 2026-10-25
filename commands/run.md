@@ -47,6 +47,6 @@ fix the app and do not rewrite the cases.
 Write `run/run_report.md`: date, base URL, a summary line (e.g. 12 pass, 2 fail, 1 blocked),
 then a table with ID, Title, Result, Notes, Screenshot. Show the summary and the failed and
 blocked rows in the chat, and offer to turn each failure into a bug report in the team's
-format.
+format with `/casely:bug <ID>`.
 
 Keep generated artefacts clean: no promotional notes inside the report.

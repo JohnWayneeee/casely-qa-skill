@@ -9,7 +9,8 @@ description: >
   Especially useful when they attach their team's existing test cases to match. When the spec
   describes an API (endpoints, status codes, schemas, auth, OpenAPI/Swagger), Casely also
   builds a runnable Postman collection, so use it for "API tests", "Postman collection", or
-  "tests I can run in Newman/CI". Triggers on the same request in any language.
+  "tests I can run in Newman/CI". Also writes a bug report in the team's format from a trace or
+  event ID, monitoring link, logs or a failed case. Triggers on the same request in any language.
 license: "MIT"
 metadata:
   author: "John Wayne"
@@ -27,8 +28,9 @@ before writing anything, then generates test cases and exports them to Excel. Wh
 requirements describe an API, the same run also produces a Postman collection the team can
 execute — the written cases and the runnable ones stay one suite, not two.
 
-No command is needed and there is no project scaffolding to set up by hand (the one optional
-command, `/casely:run`, walks finished cases in a browser). Casely reads
+No command is needed and there is no project scaffolding to set up by hand (two optional
+commands exist in Claude Code: `/casely:run` walks finished cases in a browser, `/casely:bug`
+writes a bug report). Casely reads
 attachments the way Claude reads any document — natively. This works the same way in Claude
 Code, claude.ai (web), and the Claude desktop app.
 
@@ -344,6 +346,12 @@ gives, through the Playwright MCP server, and reports pass, fail or blocked per 
 Playwright MCP connected (`claude mcp add playwright -- npx @playwright/mcp@latest`). Offer it
 as the next step only in Claude Code, and only for UI cases.
 
+### Bug reports
+When the user asks for a bug report (a trace or event ID, a monitoring link, pasted logs, or a
+failed case from `/casely:run`), read `references/bug_report.md` and follow it. It works without
+the command, so claude.ai and Cowork users just ask. In Claude Code, `/casely:bug <id>` starts
+it. Read only, mask personal data and tokens, and never file the bug yourself.
+
 ### Atomic over Composite
 Prefer several specialized cases over one that checks everything. A failed composite case says
 something broke; a failed atomic case says what.
@@ -370,6 +378,8 @@ Attachments are read natively, so there is no parser to run.
 - `references/saved_style.md` — Format of the saved `casely-style.md` (Phase 2, step 7).
 - `references/connectors.md` — Reading Jira issues, epics and Confluence pages (Phase 1), and
   read-only setup advice for the user.
+- `references/bug_report.md` — Bug report in the team's format from a trace ID, logs or a failed
+  case, with masking and the saved bug style.
 - `references/export_guide.md` — Details of the Markdown-to-Excel conversion (Phase 5a).
 - `references/api_collection.md` — When an API collection is worth building, the request spec
   format, variable extraction and the assertion rules. Read in Phase 1 when API signals show

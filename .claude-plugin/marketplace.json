@@ -9,9 +9,30 @@
     {
       "name": "casely",
       "source": "./",
-      "description": "Attach requirements or name a Jira issue, add an example of your team's test cases, approve one plan, get a TestRail-ready Excel or CSV file back, plus a runnable Postman collection when the spec describes an API.",
+      "description": "Attach requirements or name a Jira issue, add an example of your team's test cases, approve one plan, get a TestRail-ready Excel or CSV file back, plus a runnable Postman collection when the spec describes an API, and bug reports from a trace ID.",
       "category": "testing",
-      "tags": ["qa", "testing", "test-cases", "testrail", "qase", "zephyr", "xray", "requirements", "excel", "csv", "api-testing", "postman", "newman", "istqb", "jira", "confluence", "playwright"]
+      "tags": [
+        "qa",
+        "testing",
+        "test-cases",
+        "testrail",
+        "qase",
+        "zephyr",
+        "xray",
+        "requirements",
+        "excel",
+        "csv",
+        "api-testing",
+        "postman",
+        "newman",
+        "istqb",
+        "jira",
+        "confluence",
+        "playwright",
+        "bug-report",
+        "glitchtip",
+        "sentry"
+      ]
     }
   ]
 }
