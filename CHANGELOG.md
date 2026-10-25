@@ -24,9 +24,20 @@ Versions follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
   commas, quotes, an escaped pipe and line breaks go through the XLSX and CSV exports; the test
   reads both back and compares every cell, the row count and the column count with the untouched
   fixtures. Suggested in a dev.to comment thread; Arabic coverage follows feedback in #9.
+- **Saved team style.** After the first run Casely offers to save the style it learned as
+  `casely-style.md` (`.casely/style.md` in Claude Code): headers in order, ID scheme and the last
+  ID used, tone, and one example row with real data replaced by placeholders. Later runs read it
+  instead of asking for an example; a changed example needs the user's yes before the file changes.
+- **Epics and sprints from Jira.** Casely finds the stories with one JQL search, lists them with the
+  count and asks which to cover, and offers the issue key as the requirement column.
+- **Read-only connectors.** Casely uses only the read and search tools of a connector and refuses to
+  write to Jira or Confluence. `references/connectors.md` shows how to restrict the Atlassian server
+  to read and search, and a `permissions.deny` block for Claude Code that removes the write tools.
 - **Directory listing fields** in `plugin.json`: icon, documentation, support and privacy links.
 
 ### Changed
+- SKILL.md is shorter: Jira, saved style and Postman details moved into `references/`, which
+  Casely reads only when a run needs them.
 - README: plugin directory install first, an install prompt for Claude Code, the star link points
   to the repository (the stargazers page returns 404 to signed-out visitors).
 - SKILL.md: dropped an unsourced "~40% of a QA engineer's time" claim.

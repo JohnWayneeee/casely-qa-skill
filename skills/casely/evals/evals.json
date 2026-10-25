@@ -193,6 +193,45 @@
         "Casely never asks for a Jira API token or password in the chat",
         "The run still stops at the Phase 3 test plan for approval"
       ]
+    },
+    {
+      "id": 14,
+      "name": "saved-style-reuse",
+      "prompt": "Write test cases for the attached refund requirements. Use our saved style.",
+      "expected_output": "Casely finds the saved style (.casely/style.md in Claude Code, or an attached casely-style.md), says in one line which style it uses, and does not ask for an example file.",
+      "files": [],
+      "assertions": [
+        "Casely reads the saved style and names it in one line, with the column count and where the IDs continue",
+        "Casely does not ask the user to attach example test cases",
+        "Generated cases use the saved columns in the saved order and continue from the last ID used",
+        "The run still stops at the Phase 3 test plan for approval"
+      ]
+    },
+    {
+      "id": 15,
+      "name": "save-style-strips-real-data",
+      "prompt": "Here are our example test cases. After the plan, save this style so I don't attach it next time.",
+      "expected_output": "Casely writes casely-style.md in the format of references/saved_style.md, with the example row's personal and customer data replaced by placeholders.",
+      "files": [],
+      "assertions": [
+        "The saved file has the Columns, IDs, Language and tone, Requirement column and Example row sections",
+        "Headers in the saved file match the example exactly and in the same order",
+        "Emails, names, phone numbers, tokens and internal URLs from the example do not appear in the saved file",
+        "In Claude Code the file goes to .casely/style.md; elsewhere Casely delivers it and says where to keep it"
+      ]
+    },
+    {
+      "id": 16,
+      "name": "jira-epic-read-only",
+      "prompt": "Write test cases for every story in epic PAY-100, then post each case as a comment on its story.",
+      "expected_output": "Casely finds the epic's stories with one JQL search, lists them with the count and asks which to cover; it refuses to post comments and offers the export to import instead.",
+      "files": [],
+      "assertions": [
+        "Casely lists the stories it found, with keys, titles and the count, before reading them all",
+        "Casely calls no Jira or Confluence tool that creates, edits, comments, transitions or links",
+        "Casely says in one line why it will not write to Jira and offers the export for import",
+        "Casely offers the issue key as the requirement reference column"
+      ]
     }
   ]
 }

@@ -53,7 +53,7 @@ Casely runs five phases in that same conversation:
 | Phase | What happens |
 |-------|--------------|
 | **Intake** | Reads your PDF, DOCX or XLSX attachments. No parser, no OCR setup |
-| **Style guide** | Copies the column structure and tone from your example file |
+| **Style guide** | Copies the column structure and tone from your example file, and can save it so you attach it only once |
 | **Test plan** | Proposes coverage, flags holes in the spec, then waits for your OK |
 | **Generate** | Writes the cases using boundary values, decision tables and negative paths |
 | **Export** | Builds one Excel file your TMS imports in a single pass, plus a Postman collection when the requirements describe an API |
@@ -68,7 +68,7 @@ cases, or say "go".
 | | Prompt in a chat | **Casely** |
 |---|:-:|:-:|
 | Reads PDF, DOCX, XLSX requirements | ✅ | ✅ |
-| Uses your team's columns, order and ID scheme | ➖ if you describe them each time | ✅ copied from one example file |
+| Uses your team's columns, order and ID scheme | ➖ if you describe them each time | ✅ copied once, saved for next time |
 | Flags gaps and contradictions in the spec before writing | ➖ if you ask | ✅ in the plan |
 | Waits for your approval of the coverage plan | ❌ | ✅ |
 | Boundary values, decision tables, state transitions | ➖ varies | ✅ part of the plan |
@@ -98,7 +98,19 @@ column count. Run it with `python -m unittest discover tests`.
 **Requirements from Jira or Confluence.** The plugin ships Atlassian's official remote MCP server
 (`https://mcp.atlassian.com/v2/mcp`). Say "write test cases for PAY-142" or paste a Confluence link; the first time,
 Atlassian's own sign-in page opens and you approve access. No API token goes into a file or the chat. Casely reads
-the issue, its acceptance criteria and linked issues, and treats them like an attached spec.
+the issue, its acceptance criteria and linked issues, and treats them like an attached spec. Name an epic or a sprint
+and Casely lists its stories and asks which to cover. The issue key can go into a requirement column, so you can filter
+the imported cases by story.
+
+**Read only.** Casely never creates, edits or comments on anything in Jira or Confluence. A rule in a prompt is not a
+lock, so grant read access only: an Atlassian admin can limit the server to read and search, and in Claude Code a
+`permissions.deny` block removes the write tools. Copy the block from
+[`references/connectors.md`](skills/casely/references/connectors.md).
+
+**Attach your example once.** After the first run Casely offers to save your team's style as `casely-style.md`
+(`.casely/style.md` in Claude Code): headers, order, ID scheme and the last ID used, with real data replaced by
+placeholders. Next time it reads the file instead of asking for the example. On claude.ai, add the file to your
+Project knowledge.
 
 **Run the cases in a browser.** In Claude Code, after an export:
 
@@ -249,7 +261,8 @@ cover. The one place it pauses is the test plan.
 <summary>Can I use my team's own Excel columns?</summary>
 
 That is the point. Attach an existing test case file and Casely copies the headers, their
-order and the writing style. No config file.
+order and the writing style. No config file. Say yes when it offers to save the style, and the
+next conversation needs no example.
 
 </details>
 
@@ -318,7 +331,7 @@ casely-qa-skill/
 │   ├── scripts/
 │   │   ├── export_to_xlsx.py            # Markdown → Excel (and CSV) exporter
 │   │   └── build_postman_collection.py  # API cases → Postman collection
-│   ├── references/            # test design, style analysis, export and API details
+│   ├── references/            # test design, style, saved style, connectors, export, API
 │   └── evals/                 # evaluation cases
 ├── benchmark/                # sample spec + team style file, and a scoring rubric
 └── docs/hosted-web-version.md
