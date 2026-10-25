@@ -52,11 +52,11 @@ Casely runs five phases in that same conversation:
 
 | Phase | What happens |
 |-------|--------------|
-| **Intake** | Reads your PDF, DOCX or XLSX attachments. No parser, no OCR setup |
+| **Intake** | Reads your PDF, DOCX or XLSX attachments, a Jira issue or epic, or a Confluence page. No parser, no OCR setup |
 | **Style guide** | Copies the column structure and tone from your example file, and can save it so you attach it only once |
 | **Test plan** | Proposes coverage, flags holes in the spec, then waits for your OK |
 | **Generate** | Writes the cases using boundary values, decision tables and negative paths |
-| **Export** | Builds one Excel file your TMS imports in a single pass, plus a Postman collection when the requirements describe an API |
+| **Export** | Builds one Excel file (or a UTF-8 CSV) your TMS imports in a single pass, plus a Postman collection when the requirements describe an API. `/casely:run` then walks the UI cases in a browser |
 
 You only get interrupted once, at the plan. Adjust the scope, drop a module, add negative
 cases, or say "go".
