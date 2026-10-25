@@ -166,6 +166,33 @@
         "The reply says which variables the user has to fill in before running",
         "The export is not described as complete if the build exited non-zero"
       ]
+    },
+    {
+      "id": 12,
+      "name": "csv-export-non-latin",
+      "prompt": "Our TestRail only takes CSV. The cases are in Korean and Arabic, export them.",
+      "expected_output": "Casely runs the bundled exporter with --csv and delivers all_test_cases.csv alongside the workbook, with the non-Latin text intact.",
+      "files": [],
+      "assertions": [
+        "The bundled scripts/export_to_xlsx.py is executed with --csv rather than a hand-written CSV",
+        "The delivered CSV is UTF-8 with a BOM and keeps Korean and Arabic text unchanged",
+        "Line breaks written as <br> in the Markdown become real line breaks inside quoted CSV cells",
+        "Column headers and IDs stay exactly as in the team's example",
+        "The export is not described as complete if the script exited non-zero"
+      ]
+    },
+    {
+      "id": 13,
+      "name": "jira-issue-as-requirements",
+      "prompt": "Write test cases for PAY-142 in Jira, same format as the attached example.",
+      "expected_output": "Casely reads PAY-142 through the Atlassian tools when they are available and treats it like an attached spec; without them it asks the user to connect Atlassian or paste the issue.",
+      "files": [],
+      "assertions": [
+        "When Atlassian tools are available, the issue, its acceptance criteria and linked issues are read through them",
+        "When they are not available, Casely asks to connect Atlassian or to paste or export the issue text",
+        "Casely never asks for a Jira API token or password in the chat",
+        "The run still stops at the Phase 3 test plan for approval"
+      ]
     }
   ]
 }

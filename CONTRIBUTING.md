@@ -32,8 +32,12 @@ Good feature requests explain the problem they solve, not just the implementatio
 
 3. Test your changes:
    ```bash
-   # export changes: run the script against sample .md test cases
-   python skills/casely/scripts/export_to_xlsx.py results exports
+   # export changes: the round-trip test must stay green
+   python -m unittest discover tests
+   # then run the script against sample .md test cases
+   python skills/casely/scripts/export_to_xlsx.py results exports --csv
+   # plugin manifest, .mcp.json or commands/ changes
+   claude plugin validate .
    # behaviour changes: add or update a case in skills/casely/evals/evals.json
    ```
 

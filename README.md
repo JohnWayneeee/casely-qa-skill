@@ -6,9 +6,9 @@
 
 **A free, open-source AI test case generator.** Turn requirements into TestRail-ready test cases in one conversation.
 
-Attach a PDF, DOCX, or XLSX, approve one test plan, and Casely returns:
+Attach a PDF, DOCX, or XLSX, or name a Jira issue, approve one test plan, and Casely returns:
 
-TestRail-ready Excel files using your team’s columns.<br>
+TestRail-ready Excel or CSV files using your team’s columns.<br>
 Runnable Postman collections for API specs.<br>
 A list of gaps, contradictions, and untestable requirements.
 
@@ -17,7 +17,7 @@ A list of gaps, contradictions, and untestable requirements.
 <a href="#install"><img src="https://img.shields.io/badge/Install_in_one_command-→-ff6b6b?style=for-the-badge" alt="Install in one command"></a>
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![Version](https://img.shields.io/badge/version-2.3.0-blue.svg)](https://github.com/JohnWayneeee/casely-qa-skill/releases)
+[![Version](https://img.shields.io/badge/version-2.4.0-blue.svg)](https://github.com/JohnWayneeee/casely-qa-skill/releases)
 [![Stars](https://img.shields.io/github/stars/JohnWayneeee/casely-qa-skill?style=flat&logo=github)](https://github.com/JohnWayneeee/casely-qa-skill)
 [![Web](https://img.shields.io/badge/Web%20-casely.digital-ff6b6b?style=flat)](https://casely.digital/)
 
@@ -74,6 +74,9 @@ cases, or say "go".
 | Boundary values, decision tables, state transitions | ➖ varies | ✅ part of the plan |
 | One Excel file TestRail imports in one pass | ❌ you format it | ✅ |
 | Runnable Postman collection for API specs | ❌ | ✅ |
+| Reads a Jira issue or Confluence page | ➖ you copy-paste it | ✅ Atlassian connector |
+| Arabic, Korean and other non-Latin text survive the export | ➖ unchecked | ✅ round-trip tested |
+| Walks the cases in a browser and reports pass/fail | ❌ | ✅ `/casely:run` in Claude Code |
 | Price | your AI plan | your AI plan, Casely itself is free (MIT) |
 
 ## Tested against a benchmark
@@ -83,6 +86,32 @@ contradicts a worked example, an undefined "verified status" and more), boundary
 five-condition decision table, plus a 100-point rubric. The first full run scored **85/100**: 33 cases, all nine
 team columns in order, one workbook with no rejected case. The misses were two of the five planted gaps; the rules
 that catch them are now part of the skill. Details and the rubric: [`benchmark/README.md`](benchmark/README.md).
+
+The export has its own test: `tests/test_export_roundtrip.py` writes Arabic and Korean cases with commas, quotes,
+an escaped pipe and line breaks to XLSX and CSV, reads both back and compares every cell, the row count and the
+column count. Run it with `python -m unittest discover tests`.
+
+---
+
+## Jira, Confluence, and a browser run
+
+**Requirements from Jira or Confluence.** The plugin ships Atlassian's official remote MCP server
+(`https://mcp.atlassian.com/v2/mcp`). Say "write test cases for PAY-142" or paste a Confluence link; the first time,
+Atlassian's own sign-in page opens and you approve access. No API token goes into a file or the chat. Casely reads
+the issue, its acceptance criteria and linked issues, and treats them like an attached spec.
+
+**Run the cases in a browser.** In Claude Code, after an export:
+
+```
+/casely:run https://staging.example.com
+```
+
+Casely walks each UI case through the Playwright MCP server, records pass, fail or blocked, saves a screenshot for
+every failure and writes `run/run_report.md`. Connect Playwright once:
+`claude mcp add playwright -- npx @playwright/mcp@latest`. API cases stay with Newman.
+
+**CSV for trackers that want it.** Ask for CSV and the export adds `all_test_cases.csv`, UTF-8 with a BOM, so Excel
+and TestRail keep non-Latin text intact.
 
 ---
 
@@ -124,9 +153,20 @@ newman run exports/casely_api_collection.postman_collection.json \
 
 ## Install
 
+**claude.ai, Cowork, and the Claude desktop app**
+
+Install Casely from [Anthropic's plugin directory](https://claude.ai/customize/plugins/id/8bcda77b-fec6-46f2-b329-ebca18a801c1%40anthropic-plugin-directory)
+in one click. Claude keeps it updated, and it syncs to Claude Code on the same account.
+
 **Claude Code**
 
-Install it as a plugin, which also gets you updates with `claude plugin update`:
+Paste this prompt and Claude runs the install:
+
+```
+Install the Casely plugin from https://github.com/JohnWayneeee/casely-qa-skill
+```
+
+Or install it as a plugin yourself, which also gets you updates with `claude plugin update`:
 
 ```bash
 claude plugin marketplace add JohnWayneeee/casely-qa-skill
@@ -149,7 +189,7 @@ codex plugin marketplace add JohnWayneeee/casely-qa-skill
 codex plugin add casely@casely
 ```
 
-**claude.ai and Claude desktop**
+**Upload the zip by hand** (only if the plugin directory is not available to you)
 
 1. Get the upload archive, already zipped with `casely/` at its root: download
    `casely-vX.Y.Z.zip` from the
@@ -182,7 +222,7 @@ acceptable cases from a plan they were handed, and miss the holes in the spec.
 ## What you get
 
 - **`exports/all_test_cases.xlsx`** with one row per case and your own column headers. Import
-  it once instead of forty times.
+  it once instead of forty times. Ask for CSV and you also get `all_test_cases.csv`.
 - **`results/*.md`**, one file per case, so you can review or version-control them separately.
 - **A Postman collection, an environment file and run instructions** when the requirements
   describe an API — every base URL, token and id already pulled out into variables.
@@ -270,10 +310,13 @@ extract cleanly, so export a text version when you can.
 ```
 casely-qa-skill/
 ├── .claude-plugin/          # plugin + marketplace manifests (Claude Code, Codex)
+├── .mcp.json                # Atlassian remote MCP (Jira, Confluence), OAuth sign-in
+├── commands/run.md          # /casely:run, walks the cases in a browser via Playwright MCP
+├── tests/                   # export round-trip test (Arabic, Korean, CSV, XLSX)
 ├── skills/casely/
 │   ├── SKILL.md               # the skill definition and workflow
 │   ├── scripts/
-│   │   ├── export_to_xlsx.py            # Markdown → Excel exporter
+│   │   ├── export_to_xlsx.py            # Markdown → Excel (and CSV) exporter
 │   │   └── build_postman_collection.py  # API cases → Postman collection
 │   ├── references/            # test design, style analysis, export and API details
 │   └── evals/                 # evaluation cases
@@ -318,5 +361,5 @@ Read [CONTRIBUTING.md](CONTRIBUTING.md) before opening a pull request.
 
 Casely is free and MIT licensed. Changes are checked against the benchmark in this repo. Two ways to help:
 
-- ⭐ **[Star the repo](https://github.com/JohnWayneeee/casely-qa-skill/stargazers).** It takes a second and helps other QA engineers find it.
+- ⭐ **[Star the repo](https://github.com/JohnWayneeee/casely-qa-skill).** It takes a second and helps other QA engineers find it.
 - ☕ **[Buy me a coffee](https://buymeacoffee.com/JohnWayne).** If Casely saved you a day of formatting test cases, a coffee pays for the next benchmark run and the next release.

@@ -7,7 +7,33 @@ Versions follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ---
 
-## [2.3.0] — Unreleased
+## [2.4.0] — 2026-10-25
+
+### Added
+- **Requirements from Jira and Confluence.** The plugin ships Atlassian's official remote MCP
+  server (`.mcp.json`, `https://mcp.atlassian.com/v2/mcp`). Name an issue key or paste a
+  Confluence link and Casely reads the issue, its acceptance criteria and linked issues like an
+  attached spec. Sign-in runs through Atlassian's OAuth page; no API token is stored or asked for.
+- **`/casely:run`** (Claude Code). Walks the exported UI cases against a URL through the
+  Playwright MCP server, records pass, fail or blocked per case, saves a screenshot per failure
+  and writes `run/run_report.md`. API cases stay with Newman.
+- **CSV export.** `export_to_xlsx.py --csv` writes `all_test_cases.csv` next to the workbook:
+  UTF-8 with a BOM so Excel and TestRail keep Arabic, Korean and other non-Latin text, standard
+  quoting for commas, quotes and line breaks. Refused when cases carry different columns.
+- **Export round-trip test** (`tests/test_export_roundtrip.py`). Arabic and Korean fixtures with
+  commas, quotes, an escaped pipe and line breaks go through the XLSX and CSV exports; the test
+  reads both back and compares every cell, the row count and the column count with the untouched
+  fixtures. Suggested in a dev.to comment thread; Arabic coverage follows feedback in #9.
+- **Directory listing fields** in `plugin.json`: icon, documentation, support and privacy links.
+
+### Changed
+- README: plugin directory install first, an install prompt for Claude Code, the star link points
+  to the repository (the stargazers page returns 404 to signed-out visitors).
+- SKILL.md: dropped an unsourced "~40% of a QA engineer's time" claim.
+
+---
+
+## [2.3.0] — 2026-10-01
 
 ### Added
 - **Installable as a plugin in Claude Code and Codex.** The repository is now a plugin

@@ -13,7 +13,7 @@ description: >
 license: "MIT"
 metadata:
   author: "John Wayne"
-  version: "2.3.0"
+  version: "2.4.0"
   category: "QA Automation"
   repository: "https://github.com/JohnWayneeee/casely-qa-skill"
 ---
@@ -33,8 +33,8 @@ Code, claude.ai (web), and the Claude desktop app.
 
 ## Why this matters
 
-Manual test case writing accounts for ~40% of a QA engineer's time. Requirements come in
-fragmented formats (PDF, DOCX, XLSX). Every team has its own column structure, naming
+Writing test cases by hand eats a large part of a QA week. Requirements come in
+fragmented formats (PDF, DOCX, XLSX, Jira tickets, Confluence pages). Every team has its own column structure, naming
 conventions, and writing style. Casely solves this by:
 
 - Reading requirement documents directly — no separate parsing step or extra dependency.
@@ -82,6 +82,13 @@ Attach files + describe the ask
      with a short Python snippet (`openpyxl` or `pandas`) instead of reading it visually.
      Column order and exact header text drive everything downstream, and code gives an exact
      reading where a visual scan of a spreadsheet does not.
+   - **Jira and Confluence.** When the user names a Jira issue (`PAY-142`), an epic, or a
+     Confluence page instead of attaching a file, and Atlassian tools are available (the plugin
+     ships the Atlassian connector; the user signs in once through Atlassian's own OAuth
+     screen), read the issue, its acceptance criteria, linked issues and the page through those
+     tools. Treat the fetched text exactly like an attachment. If the tools are not available,
+     ask the user to connect Atlassian or paste or export the text. Never ask for an API token
+     in the chat.
 2. **Identify requirement documents vs. example test cases** from context (file names,
    content, or what the user says). If it's ambiguous which is which, ask.
 3. **Resolve scope.** If the user already named a feature/module/section, use it. Otherwise:
@@ -249,6 +256,10 @@ too, from the same cases.
    ```
 2. Use `--split` only when the user explicitly wants one file per case (per-case review or
    version control rather than import).
+   Add `--csv` when the user asks for CSV or their tracker imports CSV only: it writes
+   `all_test_cases.csv` next to the workbook, UTF-8 with a BOM so Excel and TestRail keep
+   Arabic, Korean, Cyrillic and other non-Latin text intact. A CSV holds one header row, so
+   the script refuses it when cases carry different columns.
 3. **A non-zero exit means cases were rejected**, and the message names the file and the
    reason (real newline in a cell, unescaped pipe). Fix the Markdown and run it again — never
    hand over an export that silently dropped cases, and never describe a partial export as
@@ -335,7 +346,17 @@ named. When the spec describes flows but no API, say what's missing and ask for 
 
 ### Language Awareness
 Casely is language-agnostic for data. It detects the language of the provided examples (e.g.
-Russian) and generates test cases in that same language.
+Russian) and generates test cases in that same language. Right-to-left and CJK text survive
+the export unchanged: `tests/test_export_roundtrip.py` exports Arabic and Korean cases with
+commas, quotes, pipes and line breaks to XLSX and CSV and compares every cell after reading
+them back. IDs and column headers stay as the team's example has them, so tracker imports keep
+mapping.
+
+### Running the cases in a browser
+After an export, in Claude Code, `/casely:run` walks the exported cases against a URL the user
+gives, through the Playwright MCP server, and reports pass, fail or blocked per case. It needs
+Playwright MCP connected (`claude mcp add playwright -- npx @playwright/mcp@latest`). Offer it
+as the next step only in Claude Code, and only for UI cases.
 
 ### Atomic over Composite
 Prefer several specialized cases over one that checks everything. A failed composite case says
@@ -350,7 +371,7 @@ or change formatting unless the user updates it first.
 ## Skill Files
 
 ### Scripts (`scripts/`)
-- `scripts/export_to_xlsx.py` — Markdown-to-Excel exporter (Phase 5a).
+- `scripts/export_to_xlsx.py` — Markdown-to-Excel exporter, plus UTF-8 CSV with `--csv` (Phase 5a).
 - `scripts/build_postman_collection.py` — request specs to a Postman collection, environment
   and README (Phase 5b). Runs only when the requirements describe an API.
 
