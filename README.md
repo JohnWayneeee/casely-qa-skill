@@ -1,31 +1,28 @@
-# 🚀 Casely — AI QA Test Case Generator
+# Casely: free AI test case generator for Claude
 
 <div align="center">
 
-<img src="assets/opengraph-image.png" alt="Casely — AI QA Test Case Generator" width="720">
+<img src="assets/opengraph-image.png" alt="Casely turns a requirements spec into TestRail-ready test cases" width="720">
 
-**A free, open-source AI test case generator.** Turn requirements into TestRail-ready test cases in one conversation.
+**The spec is a PDF, and TestRail wants your team's columns.**
 
-Attach a PDF, DOCX, or XLSX, or name a Jira issue, approve one test plan, and Casely returns:
+Casely reads the requirements, you approve one test plan, and it returns test cases in your format,
+a Postman collection for API specs, and the gaps it found in the spec.
 
-TestRail-ready Excel or CSV files using your team’s columns.<br>
-Runnable Postman collections for API specs.<br>
-A list of gaps, contradictions, and untestable requirements.
+For manual QA engineers and QA leads who import cases into TestRail, Qase, Zephyr or Xray.
 
-**For you if** you are a manual QA engineer or QA lead who writes test cases from specs and imports them into TestRail, Qase, Zephyr or Xray.
+**410** installs from the Claude plugin directory · **85/100** on a [public benchmark](benchmark/README.md) · MIT
 
-<a href="#install"><img src="https://img.shields.io/badge/Install_from_the_Claude_directory-→-ff6b6b?style=for-the-badge" alt="Install from the Claude plugin directory"></a>
+<a href="https://claude.ai/customize/plugins/id/8bcda77b-fec6-46f2-b329-ebca18a801c1%40anthropic-plugin-directory"><img src="https://img.shields.io/badge/Add_to_Claude-→-ff6b6b?style=for-the-badge" alt="Add Casely to Claude from the plugin directory"></a>
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Version](https://img.shields.io/badge/version-2.4.0-blue.svg)](https://github.com/JohnWayneeee/casely-qa-skill/releases)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Stars](https://img.shields.io/github/stars/JohnWayneeee/casely-qa-skill?style=flat&logo=github)](https://github.com/JohnWayneeee/casely-qa-skill)
 [![Web](https://img.shields.io/badge/Web%20-casely.digital-ff6b6b?style=flat)](https://casely.digital/)
 
 </div>
 
-**Install in one step.** On claude.ai, Cowork or the desktop app, add Casely from the
-[Claude plugin directory](https://claude.ai/customize/plugins/id/8bcda77b-fec6-46f2-b329-ebca18a801c1%40anthropic-plugin-directory).
-In Claude Code, paste this prompt:
+In Claude Code, paste this prompt instead:
 
 ```
 Install the Casely plugin from https://github.com/JohnWayneeee/casely-qa-skill
@@ -150,8 +147,8 @@ and TestRail keep non-Latin text intact.
 
 ## API requirements get a collection you can run
 
-When the spec names endpoints — a path and a method, an OpenAPI file, `curl` examples, status
-codes, an auth section — Casely says so in the plan and, once you approve, exports the API-level
+When the spec names endpoints (a path and a method, an OpenAPI file, `curl` examples, status
+codes, an auth section), Casely says so in the plan and, once you approve, exports the API-level
 cases as a Postman collection alongside the Excel file.
 
 ```
@@ -164,10 +161,10 @@ exports/
 
 - **Everything environment-specific is a variable.** `{{baseUrl}}`, `{{authToken}}`, entity ids.
   Fill them in once and the same file runs against dev, staging, or CI. The value a case is
-  actually testing — `amount: 50001` — stays literal, because that is the point of the case.
+  actually testing (`amount: 50001`) stays literal, because that is the point of the case.
 - **No credentials in the file.** The build fails on anything shaped like a JWT or a secret key,
   so the collection is safe to commit next to the test cases.
-- **Assertions come from the expected result.** Status code, response fields, error codes — one
+- **Assertions come from the expected result.** Status code, response fields, error codes: one
   `pm.test` per thing the requirement promises, generated rather than hand-typed.
 - **Requests are named after the cases.** A red assertion in Newman maps to a row in the Excel
   file without a lookup.
@@ -237,13 +234,13 @@ codex plugin add casely@casely
    ```
 2. On claude.ai, open **Settings → Capabilities**, turn on **Code execution** if it isn't
    already, then go to **Skills → Create skill** and upload the zip.
-3. The Claude desktop app uses the same account, so the skill is available there too —
+3. The Claude desktop app uses the same account, so the skill is available there too, with
    nothing to install separately.
 4. Start a chat, attach your files, describe what you need.
 
 Nothing to install locally. The export step uses `openpyxl`, which already ships inside
 Claude's code execution environment. Custom skills are private to your account (Pro, Max,
-Team, or Enterprise plan required) and won't sync to a Claude Code install — set that up
+Team, or Enterprise plan required) and won't sync to a Claude Code install. Set that up
 separately with the command above.
 
 **Pick Opus.** The plan phase decides what gets tested at all: which boundaries matter,
@@ -258,9 +255,13 @@ acceptable cases from a plan they were handed, and miss the holes in the spec.
   it once instead of forty times. Ask for CSV and you also get `all_test_cases.csv`.
 - **`results/*.md`**, one file per case, so you can review or version-control them separately.
 - **A Postman collection, an environment file and run instructions** when the requirements
-  describe an API — every base URL, token and id already pulled out into variables.
+  describe an API, with every base URL, token and id already pulled out into variables.
 - **A list of holes in the spec**: contradictions, untestable wording ("should be fast"), and
   error paths the requirements never mention.
+- **`run/run_report.md`** after `/casely:run`: pass, fail or blocked per UI case, with a
+  screenshot for every failure.
+- **`bugs/*.md`** after `/casely:bug`: one bug report per trace ID or failed case, in your
+  team's fields, with personal data masked.
 
 The export refuses to write a file it cannot read faithfully. A case that reaches TestRail
 without its steps costs more than a failed export, so malformed input gets named and fixed
