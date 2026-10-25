@@ -1,8 +1,8 @@
 {
   "name": "casely",
   "displayName": "Casely",
-  "version": "2.3.0",
-  "description": "Virtual QA lead: turns requirements into TestRail-ready test cases in one conversation, plus a runnable Postman collection when the spec describes an API.",
+  "version": "2.4.0",
+  "description": "Virtual QA lead: turns requirements, Jira issues or Confluence pages into TestRail-ready test cases in one conversation, plus a runnable Postman collection for API specs and /casely:run to walk the cases in a browser.",
   "author": {
     "name": "John Wayne",
     "url": "https://github.com/JohnWayneeee"
@@ -10,5 +10,9 @@
   "homepage": "https://casely.digital/",
   "repository": "https://github.com/JohnWayneeee/casely-qa-skill",
   "license": "MIT",
-  "keywords": ["qa", "testing", "test-cases", "testrail", "qase", "zephyr", "xray", "requirements", "excel", "api-testing", "postman", "newman", "istqb"]
+  "keywords": ["qa", "testing", "test-cases", "testrail", "qase", "zephyr", "xray", "requirements", "excel", "csv", "api-testing", "postman", "newman", "istqb", "jira", "confluence", "playwright"],
+  "icon": "./assets/logo.png",
+  "documentationUrl": "https://casely.digital/docs",
+  "supportUrl": "https://github.com/JohnWayneeee/casely-qa-skill/issues",
+  "privacyPolicyUrl": "https://casely.digital/privacy"
 }
