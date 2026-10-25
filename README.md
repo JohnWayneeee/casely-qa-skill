@@ -4,7 +4,7 @@
 
 <img src="assets/opengraph-image.png" alt="Casely — AI QA Test Case Generator" width="720">
 
-Turn requirements into TestRail-ready test cases in one conversation.
+**A free, open-source AI test case generator.** Turn requirements into TestRail-ready test cases in one conversation.
 
 Attach a PDF, DOCX, or XLSX, approve one test plan, and Casely returns:
 
@@ -12,9 +12,9 @@ TestRail-ready Excel files using your team’s columns.<br>
 Runnable Postman collections for API specs.<br>
 A list of gaps, contradictions, and untestable requirements.
 
-Built for QA engineers who want to spend less time formatting test cases and more time finding bugs.
+**For you if** you are a manual QA engineer or QA lead who writes test cases from specs and imports them into TestRail, Qase, Zephyr or Xray.
 
-**If Casely looks useful, star the repo. It helps more QA engineers find it.**  
+<a href="#install"><img src="https://img.shields.io/badge/Install_in_one_command-→-ff6b6b?style=for-the-badge" alt="Install in one command"></a>
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Version](https://img.shields.io/badge/version-2.3.0-blue.svg)](https://github.com/JohnWayneeee/casely-qa-skill/releases)
@@ -22,6 +22,7 @@ Built for QA engineers who want to spend less time formatting test cases and mor
 [![Web](https://img.shields.io/badge/Web%20-casely.digital-ff6b6b?style=flat)](https://casely.digital/)
 
 </div>
+
 ---
 
 ## Watch it work
@@ -32,7 +33,7 @@ https://github.com/user-attachments/assets/57f086c4-ec92-4a60-bc58-a00cc9757ee0
 
 ## The problem
 
-You were hired to find bugs, and 40% of your week goes into writing test cases.
+You were hired to find bugs, and your week goes into writing test cases.
 
 Requirements land as unstructured PDFs. Projects rename the columns, so you remap them each
 sprint. One module takes two days to document, and then the TestRail import fails because the
@@ -59,6 +60,29 @@ Casely runs five phases in that same conversation:
 
 You only get interrupted once, at the plan. Adjust the scope, drop a module, add negative
 cases, or say "go".
+
+---
+
+## AI test case generation: a chat prompt vs Casely
+
+| | Prompt in a chat | **Casely** |
+|---|:-:|:-:|
+| Reads PDF, DOCX, XLSX requirements | ✅ | ✅ |
+| Uses your team's columns, order and ID scheme | ➖ if you describe them each time | ✅ copied from one example file |
+| Flags gaps and contradictions in the spec before writing | ➖ if you ask | ✅ in the plan |
+| Waits for your approval of the coverage plan | ❌ | ✅ |
+| Boundary values, decision tables, state transitions | ➖ varies | ✅ part of the plan |
+| One Excel file TestRail imports in one pass | ❌ you format it | ✅ |
+| Runnable Postman collection for API specs | ❌ | ✅ |
+| Price | your AI plan | your AI plan, Casely itself is free (MIT) |
+
+## Tested against a benchmark
+
+The repo ships a fintech wallet spec with five planted defects (a vague "processed quickly", a limit that
+contradicts a worked example, an undefined "verified status" and more), boundary rules, a state machine and a
+five-condition decision table, plus a 100-point rubric. The first full run scored **85/100**: 33 cases, all nine
+team columns in order, one workbook with no rejected case. The misses were two of the five planted gaps; the rules
+that catch them are now part of the skill. Details and the rubric: [`benchmark/README.md`](benchmark/README.md).
 
 ---
 
@@ -217,6 +241,21 @@ inventing endpoints.
 </details>
 
 <details>
+<summary>Is there a free AI test case generator?</summary>
+
+Casely is free and open-source under the MIT license. You pay only for the Claude or Codex plan you already use.
+
+</details>
+
+<details>
+<summary>Can I import AI-generated test cases into TestRail?</summary>
+
+Yes. Casely exports one `.xlsx` with your team's column headers, so the TestRail Excel/CSV import maps it in a
+single pass. The same file works for Qase, Zephyr and Xray.
+
+</details>
+
+<details>
 <summary>What about scanned PDFs?</summary>
 
 Text-based PDFs, DOCX and XLSX work well. An image-only scan with no selectable text may not
@@ -260,7 +299,6 @@ Read [CONTRIBUTING.md](CONTRIBUTING.md) before opening a pull request.
 
 - 🐛 [Report a bug](https://github.com/JohnWayneeee/casely-qa-skill/issues/new?template=bug_report.md)
 - 💡 [Request a feature](https://github.com/JohnWayneeee/casely-qa-skill/issues/new?template=feature_request.md)
-- ⭐ [Star the repo](https://github.com/JohnWayneeee/casely-qa-skill/stargazers) if it saved you a work week
 
 ---
 
@@ -276,4 +314,9 @@ Read [CONTRIBUTING.md](CONTRIBUTING.md) before opening a pull request.
 
 ---
 
-<p align="center">☕ Casely saved you time? <a href="https://buymeacoffee.com/JohnWayne">Buy me a coffee</a> or star the repo.</p>
+## Support the project
+
+Casely is free and MIT licensed. Changes are checked against the benchmark in this repo. Two ways to help:
+
+- ⭐ **[Star the repo](https://github.com/JohnWayneeee/casely-qa-skill/stargazers).** It takes a second and helps other QA engineers find it.
+- ☕ **[Buy me a coffee](https://buymeacoffee.com/JohnWayne).** If Casely saved you a day of formatting test cases, a coffee pays for the next benchmark run and the next release.
