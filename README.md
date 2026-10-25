@@ -23,6 +23,14 @@ A list of gaps, contradictions, and untestable requirements.
 
 </div>
 
+**Install in one step.** On claude.ai, Cowork or the desktop app, add Casely from the
+[Claude plugin directory](https://claude.ai/customize/plugins/id/8bcda77b-fec6-46f2-b329-ebca18a801c1%40anthropic-plugin-directory).
+In Claude Code, paste this prompt:
+
+```
+Install the Casely plugin from https://github.com/JohnWayneeee/casely-qa-skill
+```
+
 ---
 
 ## Watch it work
@@ -220,7 +228,7 @@ codex plugin add casely@casely
    `casely-vX.Y.Z.zip` from the
    [latest release](https://github.com/JohnWayneeee/casely-qa-skill/releases/latest).
 
-   Building it yourself works too — just not GitHub's own "Download ZIP" button, which wraps
+   Building it yourself works too, but not with GitHub's own "Download ZIP" button: it wraps
    everything in `casely-qa-skill-main/skills/casely/` instead of putting `SKILL.md` at the
    archive root, which is what claude.ai requires:
    ```bash
