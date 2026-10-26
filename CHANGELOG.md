@@ -7,6 +7,22 @@ Versions follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ---
 
+## [Unreleased]
+
+### Added
+- **Onboarding without a spec.** When Casely opens with nothing to work from ("what can Casely
+  do?", a bare `/casely`, a feature name with no requirements), it replies with a short guide:
+  what it does, what to attach, that the plan with spec gaps comes first, and one prompt to
+  copy. No files, scripts or sample cases, so the first contact costs few tokens. Evals 19-21
+  cover the guide, a feature name without a spec, and a plain "what should I test here?" with
+  a spec attached.
+
+### Changed
+- Plugin and marketplace descriptions lead with one scenario (spec in, team-format file out)
+  instead of a feature list.
+
+---
+
 ## [2.4.0] — 2026-10-25
 
 ### Added

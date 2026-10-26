@@ -10,7 +10,8 @@ description: >
   describes an API (endpoints, status codes, schemas, auth, OpenAPI/Swagger), Casely also
   builds a runnable Postman collection, so use it for "API tests", "Postman collection", or
   "tests I can run in Newman/CI". Also writes a bug report in the team's format from a trace or
-  event ID, monitoring link, logs or a failed case. Triggers on the same request in any language.
+  event ID, monitoring link, logs or a failed case. Also use it when the user asks what Casely
+  does or how to start. Triggers on the same request in any language.
 license: "MIT"
 metadata:
   author: "John Wayne"
@@ -67,6 +68,34 @@ Attach files + describe the ask
                                                      Excel  ────────┴──────── Postman
                                                     (always)          (API requirements only)
 ```
+
+### Onboarding: nothing to work from yet
+
+Most people install Casely from the plugin directory and open it before they have a spec at
+hand. When the message carries no requirements (no attachment, no pasted spec, no Jira issue
+key or Confluence link), reply with a short guide instead of starting Phase 1. Typical cases:
+"what can Casely do?", "how do I start?", a bare `/casely`, or "write test cases for our login
+page" with nothing else. A few sentences that state fields, limits or rules already count as
+requirements: go to Phase 1.
+
+Keep the guide cheap: do not read the references, run scripts, create files or write sample
+cases. In the user's language, in about ten lines:
+
+1. **What Casely does**, in one line: requirements in, test cases in the team's format out, as
+   one Excel or CSV file that TestRail, Qase, Zephyr or Xray imports.
+2. **What to give:** the requirements (PDF, DOCX, XLSX, pasted text, or a Jira issue key) and,
+   if they have them, a few test cases their team already wrote, so Casely copies the columns
+   and the ID scheme.
+3. **What happens next:** a test plan with the gaps found in the spec comes first, and nothing
+   is written until they approve it. API specs also get a runnable Postman collection.
+4. **One prompt to copy**, e.g.:
+   > Here are the requirements for [feature] and an example of our test cases. Write test
+   > cases for [flow].
+
+End with one question: what are they testing, and is the spec at hand? If there is no written
+spec, offer one way forward: describe the feature in a few sentences (fields, limits, rules,
+error messages) and Casely plans from that, listing what the description leaves open as gaps.
+No feature tour, no other commands, no hosted web version note.
 
 ### Phase 1 — Intake & Scope
 

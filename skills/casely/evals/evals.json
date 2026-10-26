@@ -260,6 +260,49 @@
         "Evidence names run/screenshots/WD-014.png",
         "The report is saved under bugs/ and shown in the chat"
       ]
+    },
+    {
+      "id": 19,
+      "name": "onboarding-without-requirements",
+      "prompt": "What can Casely do? How do I start?",
+      "expected_output": "Casely replies with the short onboarding guide: what it does in one line, what to give, that a plan with spec gaps comes first, and one prompt to copy. It asks what the user is testing and creates nothing.",
+      "files": [],
+      "assertions": [
+        "The reply says in one line that Casely turns requirements into test cases in the team's format, exported as one Excel or CSV file",
+        "The reply names what to give: requirements (file, pasted text or Jira key) and optional example test cases",
+        "The reply says a test plan with spec gaps comes first and nothing is written before approval",
+        "The reply contains exactly one prompt to copy",
+        "The reply ends with one question about what the user is testing",
+        "No files are created, no scripts run and no reference files are read",
+        "The hosted web version note does not appear"
+      ]
+    },
+    {
+      "id": 20,
+      "name": "onboarding-feature-name-only",
+      "prompt": "Write test cases for our login page.",
+      "expected_output": "With no spec attached or pasted, Casely gives the onboarding guide, asks whether the spec is at hand, and offers to plan from a few sentences describing the feature, instead of inventing requirements.",
+      "files": [],
+      "assertions": [
+        "No test plan and no test cases are produced on this turn",
+        "Casely asks for the requirements or a Jira issue key",
+        "Casely offers to plan from a short description of fields, limits, rules and error messages",
+        "Casely does not invent login rules such as password length or lockout limits"
+      ]
+    },
+    {
+      "id": 21,
+      "name": "plain-question-triggers-full-flow",
+      "prompt": "What should I test here?",
+      "expected_output": "With requirements attached, the question is a Casely request: it reads the spec, uses the default structure or asks once for an example, and presents a test plan with gaps, then stops for approval.",
+      "files": [
+        "requirements_wallet.docx"
+      ],
+      "assertions": [
+        "Casely does not reply with the onboarding guide, because requirements are attached",
+        "A test plan with an estimated case count and a list of spec gaps is presented",
+        "No test case files are generated on this turn"
+      ]
     }
   ]
 }
