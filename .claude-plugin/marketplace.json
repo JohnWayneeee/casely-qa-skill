@@ -9,7 +9,7 @@
     {
       "name": "casely",
       "source": "./",
-      "description": "Attach requirements or name a Jira issue, add an example of your team's test cases, approve one plan, get a TestRail-ready Excel or CSV file back, plus a runnable Postman collection when the spec describes an API, and bug reports from a trace ID.",
+      "description": "Turn a spec or a Jira issue into test cases in your team's format. Approve one plan, get one Excel or CSV file your TMS imports, the gaps found in the spec, and a Postman collection for APIs.",
       "category": "testing",
       "tags": [
         "qa",

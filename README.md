@@ -11,7 +11,7 @@ a Postman collection for API specs, and the gaps it found in the spec.
 
 For manual QA engineers and QA leads who import cases into TestRail, Qase, Zephyr or Xray.
 
-**410** installs from the Claude plugin directory · **85/100** on a [public benchmark](benchmark/README.md) · MIT
+**429** installs from the Claude plugin directory · **85/100** on a [public benchmark](benchmark/README.md) · MIT
 
 <a href="https://claude.ai/customize/plugins/id/8bcda77b-fec6-46f2-b329-ebca18a801c1%40anthropic-plugin-directory"><img src="https://img.shields.io/badge/Add_to_Claude-→-ff6b6b?style=for-the-badge" alt="Add Casely to Claude from the plugin directory"></a>
 

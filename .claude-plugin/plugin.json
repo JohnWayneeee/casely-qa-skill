@@ -2,7 +2,7 @@
   "name": "casely",
   "displayName": "Casely",
   "version": "2.4.0",
-  "description": "Virtual QA lead: turns requirements, Jira issues or Confluence pages into TestRail-ready test cases in one conversation, plus a runnable Postman collection for API specs, /casely:run to walk the cases in a browser, and /casely:bug for bug reports from a trace ID.",
+  "description": "Attach a spec or name a Jira issue, approve one test plan, and get test cases in your team's columns as one Excel or CSV file that TestRail, Qase, Zephyr and Xray import. Gaps in the spec are flagged before any case is written; API specs also get a runnable Postman collection.",
   "author": {
     "name": "John Wayne",
     "url": "https://github.com/JohnWayneeee"
